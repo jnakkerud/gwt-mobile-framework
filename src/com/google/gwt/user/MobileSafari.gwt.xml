@@ -1,0 +1,52 @@
+<!--
+  ~ Copyright (c) 2010 Alex Moffat
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in
+  ~ all copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  ~ THE SOFTWARE.
+  -->
+
+<module>
+
+    <!-- Add the mobile.user.agent property -->
+    <define-property name="mobile.user.agent" values="mobilesafari, none"/>
+
+    <!-- property-provider to choose mobilesafari when appropriate -->
+    <property-provider name="mobile.user.agent"><![CDATA[
+      var ua = navigator.userAgent.toLowerCase();
+      if (ua.indexOf("iphone") || (ua.indexOf("webkit") != -1 && ua.indexOf("mobile") != -1)) {
+        return "mobilesafari";
+      }
+      return "none";
+  ]]></property-provider>
+
+    <!-- Make sure mobile.user.agent always has the none value for browsers other than safari. -->
+    <set-property name="mobile.user.agent" value="none" >
+        <none>
+            <when-property-is name="user.agent" value="safari" />
+        </none>
+    </set-property>
+
+    <!-- com.google.gwt.user.DOM.gwt.xml -->
+    <replace-with class="com.google.gwt.user.client.impl.DOMImplMobileSafari">
+        <when-type-is class="com.google.gwt.user.client.impl.DOMImpl"/>
+        <all>
+            <when-property-is name="user.agent" value="safari"/>
+            <when-property-is name="mobile.user.agent" value="mobilesafari"/>
+        </all>
+    </replace-with>
+</module>

@@ -1,0 +1,603 @@
+* {
+  font-family: Helvetica sans-serif;
+  font-weight: bold;
+  font-size: 17pt;
+}
+
+.PanelLabel {
+  border-bottom: 1px solid rgb(217, 217, 217);
+}
+
+.PanelLabel * {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.PanelLabel table {
+  table-layout: fixed;
+}
+
+.PanelLabel div {
+    padding: 8px;    
+}
+
+.hasCommand {
+    cursor: pointer;
+}
+
+.hasCommand div:after {
+    content: '\203A';
+    font: normal 28px/28px Verdana;
+    color: #808080;
+    display: block;
+    float: right;
+    margin-top: -6px;
+}
+
+@if user.agent safari {
+    .hasCommand {
+        \-webkit-tap-highlight-color: transparent;
+    }
+}
+
+.clicked {
+    background-color: blue;
+    color:white;
+}
+
+.clicked div:after{
+    color:white;
+}
+
+.button {
+  height: 29px;
+  line-height: 29px;
+  cursor: pointer;
+  font-size: 10pt;
+  font-weight: bold;
+  vertical-align: middle;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  width:auto;
+}
+
+@if user.agent safari {
+    .button {
+        \-webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
+}
+
+.last {
+  padding-bottom: 14px !important;
+}
+
+.snippit {
+  font-size: 11pt;
+  line-height: 11pt;
+  height: 33pt;
+  padding-left: 4px;
+  white-space: normal;
+  font-weight: normal;
+}
+
+img {
+  max-width: 95%;
+}
+
+#loading {
+  display: none;
+}
+
+.sectionContents, .groupedTitle {
+  padding: 10px;
+}
+
+.padding5 {
+  padding: 5px;
+}
+
+.groupedPanel * {
+    font-size: 12pt;
+}
+
+.groupedLabel {
+    padding: 10px;
+    table-layout: fixed;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+@url backButtonUrl backButton;
+@if user.agent gecko1_8 {
+  .backButton {
+    border-width: 0 8px 0 14px;
+    \-moz-border-image: backButtonUrl 0 8 0 14;
+  }
+} @elif user.agent safari {
+  .backButton {
+    border-width: 0 8px 0 14px;
+    \-webkit-border-image: backButtonUrl 0 8 0 14;
+  }
+} @else {
+  .backButton {
+    border-width: 0 8px 0 14px;
+  }
+}
+
+
+@url buttonUrl button;
+@if user.agent gecko1_8 {
+  .goButton {
+     border-width: 0 5px;
+     max-width:55px;
+    \-moz-border-image: buttonUrl 0 5 0 5;
+  }
+} @elif user.agent safari {
+  .goButton {
+     border-width: 0 5px;
+     max-width:55px;
+    \-webkit-border-image: buttonUrl 0 5 0 5;
+  }
+} @else {
+  .goButton {
+    max-width:55px;
+    border-width: 0 5px;
+  }
+}
+
+.externalLink {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+
+/* TODO remove image and use webkit-gradient Android only */
+@url toolbarUrl toolbar;
+.header {
+  color: white;
+  vertical-align: middle;
+  background: toolbarUrl #6d84a2 repeat-x;
+  /*height: 44px;*/
+  width: 100%;
+  padding: 10px;
+}
+
+/* TODO remove image and use webkit-gradient Android only */
+@url backgroundUrl background;
+body {
+  background: backgroundUrl silver repeat;
+  margin: 0px;
+  /* Minimum height on body helps preventDefault */
+  min-height: 316px;
+}
+
+@url groupUrl group;
+.sectionBar {
+    border-top: 1px solid #7d7d7d;
+    border-bottom: 1px solid #999999;
+    background: groupUrl repeat-x;
+    color: #FFFFFF;
+    cursor: pointer;
+    position: relative;
+    top: -1px;
+    margin-bottom: -2px;
+    padding: 1px 10px;
+}
+
+@if user.agent gecko1_8 {
+  .groupedList {
+      color: black;
+      background-color: white;
+      border: 1px solid rgb(217, 217, 217);
+      \-moz-border-radius: 8px;
+  }
+} @elif user.agent safari {
+  .groupedList {
+      color: \-webkit-text;
+      background-color: white;
+      border: 1px solid rgb(217, 217, 217);
+      \-webkit-border-radius: 8px;
+  }
+} @else {
+  .groupedList {
+    color: black;
+    background-color: white;
+    border: 1px solid rgb(217, 217, 217);
+  }
+}
+
+.ChildLabel {
+    border-top: 1px solid rgb(217, 217, 217);
+}
+
+.sectionContents {
+    background-color: rgb(197, 204, 211);
+    color: rgb(76,86,108);
+}
+
+.titleLabel {
+    color:#FFFFFF;
+}
+
+.loading {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    height: 80px;
+    left: 60px;
+    line-height: 80px;
+    margin: 0 auto;
+    position: absolute;
+    text-align: center;
+    top: 120px;
+    width: 200px;
+}
+
+@if user.agent gecko1_8 {
+  .loading {
+      \-moz-border-radius: 10px;
+  }
+} @elif user.agent safari {
+  .loading {
+      \-webkit-border-radius: 10px;
+      background-color: rgba(0,0,0,.7);
+  }
+}
+
+.selectLabel {
+  cursor: pointer;
+}
+
+@url selectedUrl tick;
+.selected {
+  background: selectedUrl no-repeat right;
+}
+
+.iPhoneCheckContainer {
+    cursor:pointer;
+    height:27px;
+    overflow:hidden;
+    position:relative;
+}
+
+@url onUrl on;
+label.iPhoneCheckLabelOn {
+    background:transparent onUrl no-repeat scroll 0 0;
+    color:#FFFFFF;
+    left:0;
+    padding-top:5px;
+    text-shadow:0 0 2px rgba(0, 0, 0, 0.6);
+    z-index:1;
+}
+
+@url offUrl off;
+label.iPhoneCheckLabelOff {
+    background:transparent offUrl no-repeat scroll right 0;
+    color:#8B8B8B;
+    right:0;
+    text-align:right;
+    text-shadow:0 0 2px rgba(255, 255, 255, 0.6);
+}
+
+label.iPhoneCheckLabelOn, label.iPhoneCheckLabelOff {
+    cursor:pointer;
+    display:block;
+    height:27px;
+    line-height:17px;
+    overflow:hidden;
+    padding-top:5px;
+    position:absolute;
+    text-transform:uppercase;
+    top:0;
+    white-space:nowrap;
+    width:auto;
+}
+
+label.iPhoneCheckLabelOn span {
+    padding-left:8px;
+}
+
+label.iPhoneCheckLabelOff span {
+    padding-right:8px;
+}
+
+@url sliderLeftUrl sliderLeft;
+.iPhoneCheckHandle {
+    background:transparent sliderLeftUrl no-repeat scroll 0 0;
+    cursor:pointer;
+    display:block;
+    height:27px;
+    left:0;
+    padding-left:3px;
+    position:absolute;
+    top:0;
+    width:0;
+    z-index:2;
+}
+
+@url sliderRightUrl sliderRight;
+.iPhoneCheckHandleRight {
+    background:transparent sliderRightUrl no-repeat scroll right top;
+    height:100%;
+    padding-right:3px;
+    width:100%;
+    z-index:2;
+}
+
+@url sliderCenterUrl sliderCenter;
+.iPhoneCheckHandleCenter {
+    background:transparent sliderCenterUrl repeat scroll 0 0;
+    height:100%;
+    width:100%;
+    z-index:2;
+}
+
+.landscape{}
+.animate{}
+.right{}
+.left{}
+
+/*.SliderPanel, .FlipPanel {
+  background: white;
+  width: 100%;
+  min-height: 416px;
+}
+
+@if user.agent safari {
+
+.SliderPanel {
+    \-webkit-transform: translate(0px,0px);
+    position: absolute;
+}
+
+.SliderPanel.left {
+    \-webkit-transform: translateX(-320px);
+}
+
+.SliderPanel.landscape .SliderPanel.left {
+    \-webkit-transform: translateX(-480px);
+}
+
+.SliderPanel.right {
+    \-webkit-transform: translateX(320px);
+}
+
+.SliderPanel.landscape .SliderPanel.right {
+    \-webkit-transform: translateX(480px);
+}
+
+.SliderPanel.animate {
+    \-webkit-transition-property: \-webkit-transform;
+    \-webkit-transition-duration: 0.35s;
+}
+}*/
+
+.FlipPanel {}
+
+@external .face, .front, .back, .flip;
+@if user.agent safari {
+    .face {
+        \-webkit-perspective: 1000;
+        \-webkit-backface-visibility: hidden;
+	\-webkit-transform-style: preserve-3d;
+	\-webkit-transition: all .5s ease-in-out;
+    }
+
+    .front {
+        \-webkit-transform: rotateY(0deg);
+    }
+
+    .back {
+        \-webkit-transform: rotateY(180deg);
+    }
+
+    .front.flip  {
+        \-webkit-transform: rotateY(-180deg);
+    }
+
+    .back.flip {
+        \-webkit-transform: rotateY(0deg);
+    }
+}
+
+@external .container;
+/* TODO remove hard codeded Reposition on scroll */
+body.scrolled .container {
+    height: 263px;
+}
+
+/* Reposition on orientation change */
+body[orient="landscape"] .container {
+    height: 176px;
+}
+
+/* Reposition on scroll */
+body.scrolled[orient="landscape"] .container {
+    height: 115px;
+}
+
+@external .content;
+.content {
+    position: relative;
+}
+
+/* Reposition on orientation change */
+body[orient="landscape"] {
+	top: 220px;
+}
+
+/* Reposition on scroll */
+body.scrolled[orient="landscape"] {
+	top: 159px;
+}
+
+@external .footer, .headerWrapper;
+.headerWrapper, .footer {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    /*height: 44px;*/
+    z-index: 200;
+}
+
+/*.footer {
+    position:fixed;
+    left: 0px;
+    bottom: 0px;
+    display: block;
+    width: 100%;
+    z-index: 200;
+}*/
+
+/* custom google style button */
+/*http://stopdesign.com/eg/buttons/3.1/code.html*/
+
+.gButton {
+  display:inline-block;
+  background:none;
+  margin:0;
+  padding:3px 0;
+  border-width:0;
+  overflow:visible;
+  font:100%/1.2 Arial,Sans-serif;
+  text-decoration:none;
+  color:#333;
+}
+
+* html button.gButton {
+  padding-bottom:1px;
+}
+/* Immediately below is a temporary hack to serve the
+   following margin values only to Gecko browsers
+   Gecko browsers add an extra 3px of left/right
+   padding to button elements which can't be overriden.
+   Thus, we use -3px of left/right margin to overcome this. */
+/*@if user.agent gecko1_8 {
+html:not([lang*=""]) button.gButton {
+  margin:0 -3px;
+  }
+}*/
+
+.gButton span {
+  background:#f9f9f9;
+  z-index:1;
+  margin:0;
+  padding:3px 0;
+  border-left:1px solid #ccc;
+  border-right:1px solid #bbb;
+}
+
+* html .gButton span {
+  padding-top:0;
+}
+
+.gButton span span {
+  background:none;
+  position:relative;
+  padding:3px .4em;
+  border-width:0;
+  border-top:1px solid #ccc;
+  border-bottom:1px solid #bbb;
+}
+
+.gButton b {
+  background:#e3e3e3;
+  position:absolute;
+  z-index:2;
+  bottom:0;
+  left:0;
+  width:100%;
+  overflow:hidden;
+  height:40%;
+  border-top:3px solid #eee;
+}
+
+* html .gButton b {
+  top:1px;
+}
+
+.gButton u {
+  text-decoration:none;
+  position:relative;
+  z-index:3;
+}
+
+/* only needed if implementing separate hover state for buttons */
+.gButton:hover span, .gButton:hover span span {
+  cursor:pointer;
+  border-color:#9cf !important;
+  color:#000;
+}
+
+.buttonBar {
+    background-color: #cccccc;
+    padding: 5px;
+}
+
+.singleField {
+    padding:10px;
+}
+
+.singleField label {
+    display:block;
+    float:left;
+    width:25%;
+}
+
+.singleField input {
+    width:70%;
+}
+
+.singleField select {
+    width:70%;
+}
+
+/* new transitions */
+.SliderPanel {
+     background: white;
+}
+
+/* TODO make conditional*/
+body {
+    background: #cbd2d8;
+    background-image: \-moz-linear-gradient(left, #c5ccd4, #c5ccd4 75%, transparent 75%, transparent);
+    background-image: \-webkit-gradient(linear, left top, right top, from(#c5ccd4), color-stop(0.75, #c5ccd4), color-stop(0.75, transparent), to(transparent));
+    \-webkit-background-size: 5px 100%;
+    \-moz-background-size: 7px 100%;
+    font: normal 16px/22px Helvetica, Arial, Sans-serif;
+    -webkit-text-size-adjust: 100%;
+    overflow: hidden;
+}
+
+@external .view, .current, .reverse;
+.view {
+    display: block;
+    width: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    \-webkit-transform: translate3d(100%,0%,0%);
+    opacity: 0;
+    \-webkit-transition: all 0.25s  ease-in-out;
+    \-moz-transition: all 0.25s  ease-in-out;
+    \-webkit-transform-style: preserve-3d;
+}
+
+.view.current {
+    \-webkit-transform: translate3d(0%,0%, 0%);
+    opacity: 1;
+}
+
+.view.reverse {
+    \-webkit-transform: translate3d(-100%, 0%, 0%);
+    opacity: 0;
+}
+

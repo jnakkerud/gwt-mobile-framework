@@ -1,0 +1,7 @@
+-- make sure OBF is set.
+-- build for firefox also
+
+bash synchronize.sh --noaction --nodelete --gzip --acl PUBLIC_READ UP nubotech-example-app ~/projects/example-app/war/*
+
+
+
