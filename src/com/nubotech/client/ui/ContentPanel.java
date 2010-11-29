@@ -6,20 +6,16 @@
 package com.nubotech.client.ui;
 
 import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.nubotech.client.ui.mobile.TouchableFlowPanel;
 import com.nubotech.client.ui.mobile.TouchableComposite;
 import com.nubotech.client.ui.mobile.MobileSafariUtils;
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.nubotech.client.LogUtil;
 import com.nubotech.client.Utils;
-import com.nubotech.client.resources.Resources;
 import com.nubotech.client.ui.event.TouchEndEvent;
 import com.nubotech.client.ui.event.TouchEndHandler;
 import com.nubotech.client.ui.event.TouchMoveEvent;
@@ -40,7 +36,7 @@ public class ContentPanel extends TouchableFlowPanel {
     TouchableComposite footer;
 
     public void setHeader(Widget header) {
-        this.header = new HeaderWrapper(header);        
+        this.header = new HeaderWrapper(header);
         add(this.header);
     }
 
@@ -75,30 +71,26 @@ public class ContentPanel extends TouchableFlowPanel {
         if (Utils.isMobile()) {
             // set height of container for mobile
 
-            //container.setHeight("324px");
-            LogUtil.log("header.h="+header.getOffsetHeight());
-            LogUtil.log("header.h2="+header.getElement().getStyle().getHeight());
-            //DOM.getStyleAttribute(header.getElement(), "height");
-            container.setHeight((Window.getClientHeight()-header.getOffsetHeight())+"px");
+            int offset = header.getOffsetHeight() + (footer != null ? footer.getOffsetHeight() : 0);
+            container.setHeight((Window.getClientHeight()-offset)+"px");
 
-            if (footer != null) {
-                LogUtil.log("footer.h="+footer.getOffsetHeight());
-                // float the footer
-                int h = Window.getClientHeight()-footer.getOffsetHeight();
-                footer.getElement().getStyle().setTop(h, Style.Unit.PX);
-            }
+            //if (footer != null) {
+            //    int h = Window.getClientHeight()-footer.getOffsetHeight();
+            //    footer.getElement().getStyle().setTop(h, Style.Unit.PX);
+            //}
             
             registerHandlers();
         }
         else {
-            container.setHeight((Window.getClientHeight()-header.getOffsetHeight())+"px");
+            int offset = header.getOffsetHeight() + (footer != null ? footer.getOffsetHeight() : 0);
+
+            container.setHeight((Window.getClientHeight()-offset)+"px");
             container.getElement().getStyle().setOverflow(Style.Overflow.AUTO);
 
-            //if (footer != null) {
-                // float the footer
-            //    int h = Window.getClientHeight()-footer.getOffsetHeight();
-            //    footer.getElement().getStyle().setTop(h, Style.Unit.PX);
-            //}
+            /*if (footer != null) {
+                int h = Window.getClientHeight()-footer.getOffsetHeight();
+                footer.getElement().getStyle().setTop(h, Style.Unit.PX);
+            }*/
 
         }
     }
@@ -153,7 +145,6 @@ public class ContentPanel extends TouchableFlowPanel {
             });
             contents_comp.addTouchMoveHandler(new TouchMoveHandler() {
                 public void onTouchMove(TouchMoveEvent e) {
-                    //LogUtil.log("onTouchMove.start");
 
                     // Current Y-point
                     int posY = e.touches().get(0).pageY();
@@ -165,15 +156,9 @@ public class ContentPanel extends TouchableFlowPanel {
                     Element this_element = contents_comp.getElement();
                     //Style style = this_element.getStyle();
 
-                    // NEW
                     if (isNotAssigned(this_element)) {
                         MobileSafariUtils.setTranslateY(this_element, 0);
                     }
-
-                    // TOREPLACE
-                    //if (style.getTop() == null || style.getTop().length() == 0) {
-                    //    style.setTop(0, Style.Unit.PX);
-                    //}
 
                     // Make sure we don't scroll past boundaries
                     Element container_element = container.getElement();
@@ -183,53 +168,29 @@ public class ContentPanel extends TouchableFlowPanel {
                     // If current position is greater than old position
                     if (posY > oldY) {
 
-                        // TOREPLACE Value = current position + (Y-point - old position)
-                        //double value_x = Utils.parseDouble(style.getTop()) + (posY - oldY);
-                        
-                        // NEW
                         value = MobileSafariUtils.getTranslateY(this_element) + (posY - oldY);
 
-                        //LogUtil.log("value="+value+" value_x="+value_x);
 
                         // If value is negative
                         if (value <= 0) {
 
                             // We're good
-                            // TOREPLACE this.style.top = value + "px";
-                            //style.setTop(value, Style.Unit.PX);
-
-                            // NEW
                             MobileSafariUtils.setTranslateY(this_element, value);
 
 
                             // Otherwise, we're over the limit
                         } else {
 
-                            // TO REPLACE So mimic the 'snap' to top
-                            //style.setTop(value * 0.9, Style.Unit.PX);
-
-                            // NEW
                             MobileSafariUtils.setTranslateY(this_element, (value * 0.9));
                         }
 
                         // If current position is less than old position
                     } else if (posY < oldY) {
 
-                        // TOREPLACE Value = current position - (old position - Y-point)
-                        //double value_x = Utils.parseDouble(style.getTop()) - (oldY - posY);
-
-                        // NEW
                         value  = MobileSafariUtils.getTranslateY(this_element) - (oldY - posY);
-
-                        //LogUtil.log("value="+value+" value_x="+value_x);
 
                         // If value is greater than or equal to boundary
                         if (value >= boundary) {
-
-                            // TOREPLACE We're good
-                            //style.setTop(value, Style.Unit.PX);
-
-                            // NEW
                             MobileSafariUtils.setTranslateY(this_element, value);
                         }
                     }
@@ -239,13 +200,10 @@ public class ContentPanel extends TouchableFlowPanel {
 
                     // Prevent default action
                     e.preventDefault();
-
-                    //LogUtil.log("onTouchMove.end");
                 }
             });
             contents_comp.addTouchEndHandler(new TouchEndHandler() {
                 public void onTouchEnd(TouchEndEvent event) {
-                    //LogUtil.log("onTouchEnd.start");
 
                     // no move, so ignore
                     if (oldY == -1) return;
@@ -259,15 +217,7 @@ public class ContentPanel extends TouchableFlowPanel {
                     Element this_element = contents_comp.getElement();
 
                     // Log current Y offset
-                    //Style style = this_element.getStyle();
-
-                    // TOREPLACE
-                    //double posY_x = Utils.parseDouble(style.getTop());
-
-                    // NEW
                     double posY = MobileSafariUtils.getTranslateY(this_element);
-
-                    //LogUtil.log("posY="+posY+",posY_x="+posY_x);
 
                     // If offset is greater than 0
                     if (posY > 0) {
@@ -280,12 +230,7 @@ public class ContentPanel extends TouchableFlowPanel {
                         long time = endTime.getTime() - startTime.getTime();
                         long speed = Math.abs(distance / time);
 
-                        // TOREPLACE y = current position - (distance * speed)
-                        //double y_x = Utils.parseDouble(style.getTop()) - (distance * speed);
-
-                        // NEW
                         double y = MobileSafariUtils.getTranslateY(this_element) - (distance * speed);
-                        //LogUtil.log("y="+y+",y_x="+y_x);
 
                         if ((time < 600) && distance > 50) {
                             // Flicks should go farther
@@ -305,11 +250,8 @@ public class ContentPanel extends TouchableFlowPanel {
 
                     // Clean up after ourselves
                     oldY = -1;
-
-                    //LogUtil.log("onTouchEnd.end");
                 }
             });
-
         }
     }
 

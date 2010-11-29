@@ -38,8 +38,8 @@ public interface Resources extends ClientBundle {
     @Source("iPhoneBackButton.png")
     public DataResource backButton();
 
-    @Source("background.png")
-    public DataResource background();
+    //@Source("background.png")
+    //public DataResource background();
 
     @Source("iPhoneButton.png")
     public DataResource button();

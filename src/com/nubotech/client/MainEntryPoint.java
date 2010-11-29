@@ -158,7 +158,7 @@ public class MainEntryPoint implements EntryPoint {
 
                 // add 10 more with just labels
                 int cnt = 4;
-                for (int i = 0; i < 30; i++) {
+                for (int i = 0; i < 15; i++) {
                     add(new PanelLabel("Label " + cnt++));
                 }
             }

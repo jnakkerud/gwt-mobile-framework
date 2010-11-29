@@ -16,8 +16,6 @@ public interface AppearanceCss extends CssResource {
 
     String snippit();
 
-    //String busy();
-
     String iPhoneCheckLabelOff();
 
     String selected();
@@ -63,14 +61,6 @@ public interface AppearanceCss extends CssResource {
     String externalLink();
 
     String selectLabel();
-
-    String animate();
-
-    String left();
-
-    String landscape();
-
-    String right();
 
     String groupedPanel();
 

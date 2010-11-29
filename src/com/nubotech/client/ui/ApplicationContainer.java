@@ -27,10 +27,6 @@ import java.util.Map;
  */
 public class ApplicationContainer extends Composite {
     public static final String APPLICATION_ID = "application_id";
-    //public static final String CONTENT_ID = "content";
-    //public static final String CONTAINER_ID = "container";
-    //public static final String HEADER_ID = "header";
-    //public static final String FOOTER_ID = "footer";
 
     private static ApplicationContainer instance;
 

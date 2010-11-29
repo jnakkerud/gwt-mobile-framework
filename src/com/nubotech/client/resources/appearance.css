@@ -167,12 +167,12 @@ img {
   padding: 10px;
 }
 
-/* TODO remove image and use webkit-gradient Android only */
-@url backgroundUrl background;
 body {
-  background: backgroundUrl silver repeat;
   margin: 0px;
   /* Minimum height on body helps preventDefault */
+  background: #cbd2d8;
+  font: normal 16px/22px Helvetica, Arial, Sans-serif;
+  overflow: hidden;
   min-height: 316px;
 }
 
@@ -337,46 +337,6 @@ label.iPhoneCheckLabelOff span {
     z-index:2;
 }
 
-.landscape{}
-.animate{}
-.right{}
-.left{}
-
-/*.SliderPanel, .FlipPanel {
-  background: white;
-  width: 100%;
-  min-height: 416px;
-}
-
-@if user.agent safari {
-
-.SliderPanel {
-    \-webkit-transform: translate(0px,0px);
-    position: absolute;
-}
-
-.SliderPanel.left {
-    \-webkit-transform: translateX(-320px);
-}
-
-.SliderPanel.landscape .SliderPanel.left {
-    \-webkit-transform: translateX(-480px);
-}
-
-.SliderPanel.right {
-    \-webkit-transform: translateX(320px);
-}
-
-.SliderPanel.landscape .SliderPanel.right {
-    \-webkit-transform: translateX(480px);
-}
-
-.SliderPanel.animate {
-    \-webkit-transition-property: \-webkit-transform;
-    \-webkit-transition-duration: 0.35s;
-}
-}*/
-
 .FlipPanel {}
 
 @external .face, .front, .back, .flip;
@@ -408,7 +368,7 @@ label.iPhoneCheckLabelOff span {
 @external .container;
 /* TODO remove hard codeded Reposition on scroll */
 body.scrolled .container {
-    height: 263px;
+    /*height: 263px;*/
 }
 
 /* Reposition on orientation change */
@@ -422,10 +382,6 @@ body.scrolled[orient="landscape"] .container {
 }
 
 @external .content;
-.content {
-    position: relative;
-}
-
 /* Reposition on orientation change */
 body[orient="landscape"] {
 	top: 220px;
@@ -446,15 +402,6 @@ body.scrolled[orient="landscape"] {
     /*height: 44px;*/
     z-index: 200;
 }
-
-/*.footer {
-    position:fixed;
-    left: 0px;
-    bottom: 0px;
-    display: block;
-    width: 100%;
-    z-index: 200;
-}*/
 
 /* custom google style button */
 /*http://stopdesign.com/eg/buttons/3.1/code.html*/
@@ -564,19 +511,20 @@ html:not([lang*=""]) button.gButton {
      background: white;
 }
 
-/* TODO make conditional*/
-body {
-    background: #cbd2d8;
+@if user.agent gecko1_8 {
+  body {
     background-image: \-moz-linear-gradient(left, #c5ccd4, #c5ccd4 75%, transparent 75%, transparent);
+    \-moz-background-size: 7px 100%;
+  }
+} @elif user.agent safari {
+  body {
     background-image: \-webkit-gradient(linear, left top, right top, from(#c5ccd4), color-stop(0.75, #c5ccd4), color-stop(0.75, transparent), to(transparent));
     \-webkit-background-size: 5px 100%;
-    \-moz-background-size: 7px 100%;
-    font: normal 16px/22px Helvetica, Arial, Sans-serif;
     -webkit-text-size-adjust: 100%;
-    overflow: hidden;
+  }
 }
 
-@external .view, .current, .reverse;
+/*@external .view, .current, .reverse;*/
 .view {
     display: block;
     width: 100%;
@@ -584,20 +532,48 @@ body {
     position: absolute;
     top: 0px;
     left: 0px;
-    \-webkit-transform: translate3d(100%,0%,0%);
     opacity: 0;
-    \-webkit-transition: all 0.25s  ease-in-out;
-    \-moz-transition: all 0.25s  ease-in-out;
-    \-webkit-transform-style: preserve-3d;
 }
 
+@if user.agent gecko1_8 {
+  .view {
+    \-moz-transform: translate(100%,0%,0%);
+    \-moz-transition: all 0.25s  ease-in-out;
+  }
+} @elif user.agent safari {
+  .view {
+    \-webkit-transform: translate3d(100%,0%,0%);
+    \-webkit-transition: all 0.25s  ease-in-out;
+    \-webkit-transform-style: preserve-3d;
+  }
+}
+
+
 .view.current {
-    \-webkit-transform: translate3d(0%,0%, 0%);
     opacity: 1;
 }
 
+@if user.agent gecko1_8 {
+  .view.current {
+    \-moz-transform: translate(0%,0%,0%);
+  }
+} @elif user.agent safari {
+  .view.current {
+    \-webkit-transform: translate3d(0%,0%,0%);
+  }
+}
+
+
 .view.reverse {
-    \-webkit-transform: translate3d(-100%, 0%, 0%);
     opacity: 0;
 }
 
+@if user.agent gecko1_8 {
+  .view.reverse {
+    \-moz-transform: translate(-100%, 0%, 0%);
+  }
+} @elif user.agent safari {
+  .view.reverse {
+    \-webkit-transform: translate3d(-100%, 0%, 0%);
+  }
+}
