@@ -60,9 +60,6 @@ public final class SelectLabel extends PanelLabel {
     public void onBrowserEvent(Event e) {
         switch (DOM.eventGetType(e)) {
             case Event.ONCLICK:
-                // remove selected label
-                //removeSelected();
-                //addStyleName(Resources.INSTANCE.appearanceCss().selected());
                 select();
                 grp.onSelect(this);
 

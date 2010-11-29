@@ -26,7 +26,6 @@ import com.google.gwt.resources.client.ExternalTextResource;
  */
 public interface Resources extends ClientBundle {
 
-    // TODO sprite the images
     public static final Resources INSTANCE = (Resources) GWT.create(Resources.class);
 
     /**
@@ -38,9 +37,6 @@ public interface Resources extends ClientBundle {
     @Source("iPhoneBackButton.png")
     public DataResource backButton();
 
-    //@Source("background.png")
-    //public DataResource background();
-
     @Source("iPhoneButton.png")
     public DataResource button();
 
@@ -49,9 +45,6 @@ public interface Resources extends ClientBundle {
 
     @Source("sectionBg.png")
     public DataResource group();
-
-    @Source("tick.png")
-    public DataResource tick();
 
     @Source("on.png")
     public DataResource on();

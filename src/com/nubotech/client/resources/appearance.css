@@ -253,10 +253,16 @@ body {
   cursor: pointer;
 }
 
-@url selectedUrl tick;
-.selected {
-  background: selectedUrl no-repeat right;
+.selected div:after {
+    content: '\2713';
+    font: normal 28px/28px Verdana;
+    color: #808080;
+    display: block;
+    float: right;
+    margin-top: -6px;
 }
+
+
 
 .iPhoneCheckContainer {
     cursor:pointer;
