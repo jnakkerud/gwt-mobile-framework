@@ -31,13 +31,7 @@ public class SingleField extends Composite {
         // add the field widget
         valueWidget.getElement().setAttribute("name", name);
         fp.add(valueWidget);
-
-        //initGui();
     }
-
-    //private void initGui() {
-
-    //}
 
     class FormLabel extends Widget {
         public FormLabel(String name, String text) {

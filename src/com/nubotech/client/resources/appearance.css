@@ -495,22 +495,18 @@ html:not([lang*=""]) button.gButton {
 }
 
 .singleField {
-    padding:10px;
+    line-height:20px;
+    list-style-type:none;
+    padding:11px 8px 12px;
 }
 
-.singleField label {
-    display:block;
-    float:left;
-    width:25%;
+.singleField label + input[type] {
+    padding-left:95px;
 }
 
-.singleField input {
-    width:70%;
-}
-
-.singleField select {
-    width:70%;
-}
+.singleField textarea,.singleField input[type=text],.singleField input[type=password],.singleField input[type=search]{width:100%;display:block;margin:-4px 0 -5px;padding:4px 0 5px;border:0;font-size:inherit;line-height:inherit;font-weight:normal;background:none;-webkit-border-radius:0;-webkit-appearance:none;-webkit-box-sizing:border-box}
+.singleField select{width:100%;display:block;font-size:inherit}
+.singleField label + select,.singleField label + textarea,.singleField label + input[type]{margin-top:-24px}
 
 /* new transitions */
 .SliderPanel {
