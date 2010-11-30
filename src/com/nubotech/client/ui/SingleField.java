@@ -9,6 +9,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.TakesValue;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.nubotech.client.resources.Resources;
 
@@ -26,7 +27,9 @@ public class SingleField extends Composite {
         setStyleName(Resources.INSTANCE.appearanceCss().singleField());
 
         // create the label
-        fp.add(new FormLabel(name, label));
+        if (!(valueWidget instanceof ListBox)) {
+            fp.add(new FormLabel(name, label));
+        }
 
         // add the field widget
         valueWidget.getElement().setAttribute("name", name);
