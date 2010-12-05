@@ -20,8 +20,6 @@ public interface AppearanceCss extends CssResource {
 
     String selected();
 
-    String button();
-
     String clicked();
 
     String iPhoneCheckHandleRight();
@@ -30,8 +28,6 @@ public interface AppearanceCss extends CssResource {
 
     String iPhoneCheckLabelOn();
 
-    String backButton();
-
     String loading();
 
     String SliderPanel();
@@ -39,8 +35,6 @@ public interface AppearanceCss extends CssResource {
     String sectionBar();
 
     String PanelLabel();
-
-    String header();
 
     String ChildLabel();
 
@@ -53,8 +47,6 @@ public interface AppearanceCss extends CssResource {
     String iPhoneCheckHandle();
 
     String groupedList();
-
-    String goButton();
 
     String iPhoneCheckContainer();
 

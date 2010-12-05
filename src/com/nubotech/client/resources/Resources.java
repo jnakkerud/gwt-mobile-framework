@@ -34,15 +34,6 @@ public interface Resources extends ClientBundle {
     @Source("appearance.css")
     public AppearanceCss appearanceCss();
 
-    @Source("iPhoneBackButton.png")
-    public DataResource backButton();
-
-    @Source("iPhoneButton.png")
-    public DataResource button();
-
-    @Source("iPhoneToolbar.png")
-    public DataResource toolbar();
-
     @Source("sectionBg.png")
     public DataResource group();
 

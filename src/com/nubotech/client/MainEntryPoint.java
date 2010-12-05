@@ -510,14 +510,9 @@ public class MainEntryPoint implements EntryPoint {
         }
 
         @Override
-        protected Label createBackButton() {
-            Label l = new Label("Cancel");
-            l.addClickHandler(parentClickListener);
-            l.addStyleName(Resources.INSTANCE.appearanceCss().button());
-            l.addStyleName(Resources.INSTANCE.appearanceCss().goButton());
-            return l;
+        protected String backButtonLabel() {
+            return "Cancel";
         }
-
 
     }
 

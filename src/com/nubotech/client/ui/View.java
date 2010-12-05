@@ -26,8 +26,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHTML;
 import com.google.gwt.user.client.ui.HasText;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -51,9 +49,8 @@ public abstract class View extends Composite implements HasHTML {
     };
     protected View parent;
     private final TouchableFlowPanel contents = new TouchableFlowPanel();
-    private final HorizontalPanel header = new HorizontalPanel(); // TODO replace with header tag http://vxjs.org/CSS3/PageFlip/index.html
+    private final Header header = new Header();
     private PanelLabel panelLabel;
-    private final UnsunkLabel titleLabel = new UnsunkLabel("");
     private Command editCommand;
     private HasText hasText;
     private HasHTML hasHtml;
@@ -86,25 +83,16 @@ public abstract class View extends Composite implements HasHTML {
             }
         }) {
             public void setText(String title) {
-                titleLabel.setText(title);
+                header.setHeading(title);
                 super.setText(title);
             }
         };
         panelLabel.setText(title);
 
-        header.setVerticalAlignment(HorizontalPanel.ALIGN_TOP);
-
         if (parent != null) {
             // add the back button
-            header.add(createBackButton());
+            header.setButton(backButtonLabel(), true, parentClickListener);
         }
-
-        titleLabel.addStyleName(Resources.INSTANCE.appearanceCss().titleLabel());
-        header.add(titleLabel);
-        header.setCellWidth(titleLabel, "100%");
-        header.setCellHorizontalAlignment(titleLabel, HorizontalPanel.ALIGN_CENTER);
-        header.addStyleName(Resources.INSTANCE.appearanceCss().header());
-        header.setHeight("44px");
 
         header_panel = new ContentPanel();
         header_panel.setHeader(header);
@@ -118,12 +106,8 @@ public abstract class View extends Composite implements HasHTML {
         addStyleName(Resources.INSTANCE.appearanceCss().view());
     }
 
-    protected Label createBackButton() {
-        Label l = new Label(parent.getShortTitle());
-        l.addClickHandler(parentClickListener);
-        l.addStyleName(Resources.INSTANCE.appearanceCss().button());
-        l.addStyleName(Resources.INSTANCE.appearanceCss().backButton());
-        return l;
+    protected String backButtonLabel() {
+        return parent.getShortTitle();
     }
 
     public void setFooter(Widget w) {
@@ -178,18 +162,11 @@ public abstract class View extends Composite implements HasHTML {
      */
     public void setEditCommand(String label, String title, Command command) {
         editCommand = command;
-        Label l = new Label(label);
-        // add the edit button
-        l.addStyleName(Resources.INSTANCE.appearanceCss().button());
-        l.addStyleName(Resources.INSTANCE.appearanceCss().goButton());
-        l.setTitle(title);
-        l.addClickHandler(new ClickHandler() {
+        header.setButton(label, false, new ClickHandler() {
             public void onClick(ClickEvent event) {
                 editCommand.execute();
             }
         });
-        header.add(l);
-        header.setCellHorizontalAlignment(l, HorizontalPanel.ALIGN_RIGHT);
     }
 
     public void setHTML(String html) {

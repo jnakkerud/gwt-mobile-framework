@@ -50,25 +50,6 @@
     color:white;
 }
 
-.button {
-  height: 29px;
-  line-height: 29px;
-  cursor: pointer;
-  font-size: 10pt;
-  font-weight: bold;
-  vertical-align: middle;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow: ellipsis;
-  width:auto;
-}
-
-@if user.agent safari {
-    .button {
-        \-webkit-tap-highlight-color: rgba(0,0,0,0);
-    }
-}
-
 .last {
   padding-bottom: 14px !important;
 }
@@ -110,62 +91,12 @@ img {
     text-overflow: ellipsis;
 }
 
-
-@url backButtonUrl backButton;
-@if user.agent gecko1_8 {
-  .backButton {
-    border-width: 0 8px 0 14px;
-    \-moz-border-image: backButtonUrl 0 8 0 14;
-  }
-} @elif user.agent safari {
-  .backButton {
-    border-width: 0 8px 0 14px;
-    \-webkit-border-image: backButtonUrl 0 8 0 14;
-  }
-} @else {
-  .backButton {
-    border-width: 0 8px 0 14px;
-  }
-}
-
-
-@url buttonUrl button;
-@if user.agent gecko1_8 {
-  .goButton {
-     border-width: 0 5px;
-     max-width:55px;
-    \-moz-border-image: buttonUrl 0 5 0 5;
-  }
-} @elif user.agent safari {
-  .goButton {
-     border-width: 0 5px;
-     max-width:55px;
-    \-webkit-border-image: buttonUrl 0 5 0 5;
-  }
-} @else {
-  .goButton {
-    max-width:55px;
-    border-width: 0 5px;
-  }
-}
-
 .externalLink {
   color: blue;
   cursor: pointer;
   text-decoration: underline;
 }
 
-
-/* TODO remove image and use webkit-gradient Android only */
-@url toolbarUrl toolbar;
-.header {
-  color: white;
-  vertical-align: middle;
-  background: toolbarUrl #6d84a2 repeat-x;
-  /*height: 44px;*/
-  width: 100%;
-  padding: 10px;
-}
 
 body {
   margin: 0px;
@@ -345,7 +276,7 @@ label.iPhoneCheckLabelOff span {
 
 .FlipPanel {}
 
-@external .face, .front, .back, .flip;
+@external .face, .front, .reverse, .flip;
 @if user.agent safari {
     .face {
         \-webkit-perspective: 1000;
@@ -358,7 +289,7 @@ label.iPhoneCheckLabelOff span {
         \-webkit-transform: rotateY(0deg);
     }
 
-    .back {
+    .reverse {
         \-webkit-transform: rotateY(180deg);
     }
 
@@ -366,7 +297,7 @@ label.iPhoneCheckLabelOff span {
         \-webkit-transform: rotateY(-180deg);
     }
 
-    .back.flip {
+    .reverse.flip {
         \-webkit-transform: rotateY(0deg);
     }
 }
@@ -520,8 +451,8 @@ html:not([lang*=""]) button.gButton {
   }
 } @elif user.agent safari {
   body {
-    background-image: \-webkit-gradient(linear, left top, right top, from(#c5ccd4), color-stop(0.75, #c5ccd4), color-stop(0.75, transparent), to(transparent));
-    \-webkit-background-size: 5px 100%;
+    background: literal("-webkit-gradient(linear, left top, right top, from(#c5ccd4), color-stop(0.75, #c5ccd4), color-stop(0.75, transparent), to(transparent))");
+    -webkit-background-size: 5px 100%;
     -webkit-text-size-adjust: 100%;
   }
 }
@@ -579,3 +510,108 @@ html:not([lang*=""]) button.gButton {
     \-webkit-transform: translate3d(-100%, 0%, 0%);
   }
 }
+
+@external .header;
+.header {
+    padding: 4px 10px;
+    height: 27px;
+    border-top: 1px solid #cdd5df;
+    border-bottom: 1px solid #2d3642;
+}
+
+@if user.agent gecko1_8 {
+  .header {
+    background-image: literal("-moz-linear-gradient(top, #b0bccd, #889bb3 50%, #8195af 50%, #6d84a2))");
+  }
+} @elif user.agent safari {
+  .header {
+    display: \-webkit-box;
+    \-webkit-box-orient: horizontal;
+    \-webkit-box-pack:justify;
+    background: literal("-webkit-gradient(linear, left top, left bottom, from(#b0bccd), color-stop(0.5, #889bb3), color-stop(0.5, #8195af), to(#6d84a2))");
+  }
+}
+
+h1 {
+    font: bold 16px/20px Helvetica, Arial, Sans-serif;
+    letter-spacing: -1px;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.5);
+    color: #fff;
+    margin: 0px;
+    \-webkit-box-flex: 1;
+    text-align: center
+}
+
+@external .button, .hover, .back;
+.button {  
+    border: solid 1px #424650;
+    display: inline-block;
+    cursor: pointer;
+    padding: 4px 10px; 
+    color: #fff;
+    font: normal 12px/14px Helvetica, Sans-serif;
+    position: relative;
+}
+
+@if user.agent gecko1_8 {
+  .button {
+    \-moz-box-shadow: 2px 2px 3px #999;
+    \-moz-border-radius: 6px;
+    background: literal("-moz-linear-gradient(top, #889ab4,  #6380a9 50%, #486a98 50%, #496b9a))");
+  }
+} @elif user.agent safari {
+  .button {
+    \-webkit-box-shadow: 2px 2px 3px #999;
+    \-webkit-border-radius: 6px;
+    background: literal("-webkit-gradient(linear, left top, left bottom, from(#889ab4), color-stop(0.5, #6380a9), color-stop(0.5, #486a98), to(#496b9a))");
+    \-webkit-tap-highlight-color: transparent;
+  }
+}
+
+
+@if user.agent gecko1_8 {
+  .button:hover, .button.hover {
+    background-image: literal("-moz-linear-gradient(top, #74809d, #465885 50%, #283d6c 50%, #283d6f))");
+  }
+} @elif user.agent safari {
+  .button:hover, .button.hover {
+    background: literal("-webkit-gradient(linear, left top, left bottom, from(#74809d), color-stop(0.5, #465885), color-stop(0.5, #283d6c), to(#283d6f))");
+    \-webkit-tap-highlight-color: transparent;
+  }
+}
+
+.button.back {
+    padding: 4px 10px 4px 6px;
+    margin-left: 10px;
+}
+
+.back > span {
+    border-left: solid 1px #424650;
+    border-bottom: solid 1px #424650;
+    height: 19px;
+    width: 19px;
+    display: inline-block;
+    position: absolute;
+    left: -7px;
+    top: 1px;
+}
+
+@if user.agent gecko1_8 {
+  .back > span {
+
+  }
+} @elif user.agent safari {
+  .back > span {
+    background: literal("-webkit-gradient(linear, left top, right bottom, from(#889ab4), color-stop(0.5, #6380a9), color-stop(0.5, #486a98), to(#496b9a))");
+    \-webkit-border-top-left-radius: 6px;
+    \-webkit-border-bottom-right-radius: 6px;
+    \-webkit-transform: rotate(45deg);
+    \-webkit-mask-image: literal("-webkit-gradient(linear, left bottom, right top, from(#000000), color-stop(0.5,#000000), color-stop(0.5, transparent), to(transparent))");
+    \-webkit-background-clip: content;
+  }
+}
+
+.button.back:hover > span, .button.back.hover > span {
+    background: literal("-webkit-gradient(linear, left top, right bottom, from(#74809d), color-stop(0.5, #465885), color-stop(0.5, #283d6c), to(#283d6f))");
+}
+
