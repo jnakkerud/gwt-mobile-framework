@@ -77,4 +77,13 @@
     <delete dir="war/example" failonerror="false" />
   </target>
 
+  <target name="jar" depends= "build" description="Jar the project">
+      <mkdir dir="dist"/>
+      <jar destfile="dist/mobile-gwt.jar"
+       basedir="war/WEB-INF/classes"
+       includes="mypackage/test/**"
+       excludes="**/Test.class"
+      />
+  </target>
+
 </project>

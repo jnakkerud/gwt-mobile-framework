@@ -44,6 +44,7 @@ import com.nubotech.client.geo.PositionError;
 import com.nubotech.client.geo.PositionOptions;
 import com.nubotech.client.resources.Resources;
 import com.nubotech.client.ui.ApplicationContainer;
+import com.nubotech.client.ui.FeedView;
 import com.nubotech.client.ui.GButton;
 import com.nubotech.client.ui.GroupListPanel;
 import com.nubotech.client.ui.PanelLabel;
@@ -139,7 +140,7 @@ public class MainEntryPoint implements EntryPoint {
 
         View parentView = new View.Parent("Home");
         final SectionPanelExample sectionExample = new SectionPanelExample("Section Example", parentView);
-        final DetailPanel detailPanel = new DetailPanel(new String[]{"example details 1", "example details 2"}, "Label 2", parentView);
+        final FeedView detailPanel = new FeedView("Feeds", parentView);
         final ExamplePanel examplePanel = new ExamplePanel("Grouped Example", parentView);
         final SettingsPanel settingsPanel = new SettingsPanel(parentView);
 

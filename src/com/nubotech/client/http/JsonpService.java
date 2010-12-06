@@ -6,6 +6,7 @@
 package com.nubotech.client.http;
 
 import com.google.gwt.dom.client.Element;
+import com.nubotech.client.LogUtil;
 import com.nubotech.client.Utils;
 
 /**
@@ -48,13 +49,14 @@ public abstract class JsonpService {
         // gen a unique callback name
         String callback = this.reserveCallback();
 
-        // Generate a function in the page with the known name we just created
+        // Generate a function in the page with the callback name we just created
         setup(cb, callback);
-
 
         // Makes the request using OAuth, which calls our just created callback
         // and adds the response as a <script/> to the page
-        Element script = Utils.createScript(generateRequestUrl(callback));
+        String request = generateRequestUrl(callback);
+        LogUtil.log("jsonp.request:" + request);
+        Element script = Utils.createScript(request);
 
         // cleanup
         cleanup(script, cb, callback);

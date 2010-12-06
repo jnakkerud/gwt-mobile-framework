@@ -10,6 +10,7 @@ package com.nubotech.client.http;
  * @author jonnakkerud
  */
 public class TwitterSearch extends JsonpService {
+    // http://search.twitter.com/search.json?callback=foo&q=twitter
     public static final String TWITTER_PUBLIC_URL = "http://search.twitter.com/search.json?";
 
     String queryStr;
@@ -23,6 +24,6 @@ public class TwitterSearch extends JsonpService {
     @Override
     public String generateRequestUrl(String callback) {
         String query = RestEncoder.encodeUrlString(queryStr);
-        return TWITTER_PUBLIC_URL+ "&callback=" + callback + "&q=" + query;
+        return TWITTER_PUBLIC_URL+ "callback=" + callback + "&q=" + query;
     }
 }
