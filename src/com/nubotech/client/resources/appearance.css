@@ -615,3 +615,80 @@ h1 {
     background: literal("-webkit-gradient(linear, left top, right bottom, from(#74809d), color-stop(0.5, #465885), color-stop(0.5, #283d6c), to(#283d6f))");
 }
 
+@external message, .networkAvatar, .networkName, .postTime, .messageContent;
+.message {
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    -moz-border-radius-bottomleft:3px;
+    -moz-border-radius-bottomright:3px;
+    -moz-border-radius-topleft:3px;
+    -moz-border-radius-topright:3px;
+
+    -webkit-background-clip:border-box;
+    -webkit-background-origin:padding;
+    -webkit-border-bottom-left-radius:3px;
+    -webkit-border-bottom-right-radius:3px;
+    -webkit-border-top-left-radius:3px;
+    -webkit-border-top-right-radius:3px;
+    
+    background:#F4F4F4 url(../../../images/themes/classic/streams/message-gradient.png) repeat-x scroll 0 0;
+    border-bottom:1px solid #77BC66;
+    border-top:1px solid #BEE1AA;
+    overflow:hidden;
+    padding:4px 6px 5px 42px;
+    position:relative;
+}
+
+.message .networkAvatar {
+    display:block;
+    height:30px;
+    left:5px;
+    position:absolute;
+    top:5px;
+    width:30px;
+    background-color:#CCCCCC;
+    border-bottom:1px solid #FFFFFF;
+    z-index: 1;
+}
+
+.message .networkName {
+    color:#4E763E;
+    float:left;
+    font-family:Verdana,Arial,Helvetica,Sans-Serif;
+    font-weight:bold;
+    line-height:12px
+}
+
+a {
+    text-decoration:none;
+    outline-color:-moz-use-text-color;
+    outline-style:none;
+    outline-width:medium;
+    text-decoration:none;
+}
+
+.message .postTime {
+    color:#999999;
+    clear:left;
+    float:left;
+    font-size:11px;
+    margin-bottom:0.4em;
+    white-space:nowrap;
+}
+
+.message .messageContent {
+    clear:left;
+    color:#32363F;
+}
+
+p:last-child {
+    margin-bottom:0;
+}
+
+
+p {
+    font-size:12px;
+    margin:0.1em 0 0.5em;
+}
+

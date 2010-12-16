@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.nubotech.client.http;
+package com.nubotech.client;
 
 /**
  *

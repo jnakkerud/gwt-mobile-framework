@@ -5,10 +5,7 @@
 
 package com.nubotech.client;
 
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.RootPanel;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -19,21 +16,13 @@ import java.util.List;
  */
 public class Utils {
     public static final String HTTP_DATE_PATTERN = "EEE, d MMM yyyy HH:mm:ss";
+    public static final String HTTP_FEED_DATE_PATTERN = "yyyy-MM-ddTHH:mm:ss";
+
     public static final long HOURS = 1000 * 60 * 60;
     public static final long MINUTES = 1000 * 60;
 
     static DateTimeFormat formatter;
-
-    /*
-     * Creates a script tag in the page with the given URL as a source
-     */
-    public static Element createScript(String url) {
-        Element elem = DOM.createElement("script");
-        elem.setAttribute("language", "text/javascript");
-        elem.setAttribute("src", url);
-        RootPanel.getBodyElement().appendChild(elem);
-        return elem;
-    }
+    static DateTimeFormat feed_formatter;
 
     public static String createSpan(String txt, String style) {
         StringBuilder sb = new StringBuilder();
@@ -114,6 +103,23 @@ public class Utils {
             formatter = DateTimeFormat.getFormat(HTTP_DATE_PATTERN);
         }
         return formatter.parse(ps);
+    }
+
+    public static Date parseFeedDate(String s) {
+        // yyyy-MM-ddTHHmmss
+        String ps = null;
+        if (s.indexOf("Z") > 0) {
+            ps = s.substring(0, s.indexOf("Z"));
+            ps = ps.trim();
+        }
+        else {
+            ps = s;
+        }
+
+        if (feed_formatter == null) {
+            feed_formatter = DateTimeFormat.getFormat(HTTP_FEED_DATE_PATTERN);
+        }
+        return feed_formatter.parse(ps);
     }
 
 }

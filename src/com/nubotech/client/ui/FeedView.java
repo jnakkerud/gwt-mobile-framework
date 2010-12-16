@@ -8,17 +8,13 @@ package com.nubotech.client.ui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.HTML;
-import com.nubotech.client.LogUtil;
+import com.nubotech.client.RestEncoder;
 import com.nubotech.client.Utils;
-import com.nubotech.client.http.JsonCallback;
-import com.nubotech.client.http.TwitterSearch;
-import com.nubotech.client.http.YahooQuery;
 import java.util.Date;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  *
@@ -28,13 +24,13 @@ public class FeedView extends View {
 
     String twitterQuery = "verbier";
     String[] feedUrls = new String[] {"http://www.google.com/alerts/feeds/05173895962631213926/7161854547244649399"};
-    long now;
+
+    Set<FeedEntry> feeds = new TreeSet<FeedEntry>();
 
     public FeedView(String title, View parent) {
         super(title, parent);
 
         Date d = new Date();
-        now = Date.UTC(d.getYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds());
     }
 
     @Override
@@ -51,56 +47,31 @@ public class FeedView extends View {
         return sb.toString();
     }
 
-    private void loadTweets(JSONArray ary) {
-        for (int i = 0; i < ary.size(); ++i) {
-            JSONObject tweet = ary.get(i).isObject();
-            // from_user anchor
-            String txt = tweet.get("text").isString().stringValue();
-            String user = tweet.get("from_user").isString().stringValue();
-            // calc time elapsed
-            String elapsed = toElapsed(tweet.get("created_at").isString().stringValue());
-            TweetPanel tp = new TweetPanel(txt, user, elapsed);
-            // margin-bottom: 5px;
-            //DOM.setStyleAttribute(tp.getElement(), "marginBottom", "5px");
-            add(tp);
-        }
-    }
-
-    private String toElapsed(String createdAt) {
-        // about X hours ago
-        Date createdAtDate = Utils.parseHTTPDate(createdAt);
-        long elapsed = now - createdAtDate.getTime();
-        long hours = elapsed/(Utils.HOURS);
-        StringBuilder sb = new StringBuilder();
-        if (hours <= 0) {
-            // TODO DEFER formatting bug
-            //sb.append("about ").append(elapsed/(Utils.MINUTES)).append(" minutes ago");
-            sb.append(createdAt);
-        }
-        else if (hours > 0 && hours <= 24) {
-            sb.append("about ").append(hours).append(" hours ago");
-        }
-        else {
-            sb.append(createdAt);
-        }
-
-        return sb.toString();
-    }
-
     private void loadFeeds() {
-        /*TwitterSearch.execute(generateTwitterQuery(), new JsonCallback() {
-            public void onSuccess(JavaScriptObject jso) {
-                if (jso != null) {
-                    JSONObject json = new JSONObject(jso);
-                    JSONArray ary = json.get("results").isArray();
-                    loadTweets(ary);
-                }
-                else {
-                    LogUtil.log("load failed");
-                }
-            }
-        });*/
+        String twitter_url = "http://search.twitter.com/search.json?q=" + generateTwitterQuery();
 
+        JsonpRequestBuilder twitter_req = new JsonpRequestBuilder();
+        twitter_req.requestObject(twitter_url,
+                new AsyncCallback<TwitterFeed>() {
+                    public void onFailure(Throwable throwable) {
+                        GWT.log("error", throwable);
+                        loadAtomFeeds();
+                    }
+                    public void onSuccess(TwitterFeed feed) {
+                        // TODO see http://hootsuite.com/dashboard#/tabs?id=3683313 for idea on feed panel
+
+                        JsArray<Tweet> entries = feed.getEntries();
+                        for (int i = 0; i < entries.length(); i++) {
+                            Tweet tweet = entries.get(i);
+                            feeds.add(new TweetEntry(tweet));
+                        }
+
+                        loadAtomFeeds();
+                    }
+                });
+    }
+
+    private void loadAtomFeeds() {
         //http://developer.yahoo.com/yql/console/?q=select%20title.content%2C%20link.href%2C%20published%2C%20content.content%20from%20atom%20where%20url%3D%27http%3A%2F%2Fwww.google.com%2Falerts%2Ffeeds%2F05173895962631213926%2F7161854547244649399%27%20limit%2010%20%7C%20sort(field%3D%22published%22)%20%7C%20reverse()
         StringBuilder sb = new StringBuilder();
         sb.append("select title.content, link.href, published, content.content from atom where url in (");
@@ -113,69 +84,201 @@ public class FeedView extends View {
         }
         sb.append(") limit 10 | sort(field=\"published\") | reverse()");
 
-        String url = YahooQuery.YQL_URL_PUBLIC+ "q=" + sb.toString() + "&format=json";
+        String url = "http://query.yahooapis.com/v1/public/yql?q=" + RestEncoder.encodeUrlString(sb.toString()) + "&format=json";
 
-        JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
-        jsonp.requestObject(url,
-                new AsyncCallback<Feed>() {
+        JsonpRequestBuilder feed_req = new JsonpRequestBuilder();
+        feed_req.requestObject(url,
+                new AsyncCallback<AtomFeed>() {
 
                     public void onFailure(Throwable throwable) {
                         //Log.severe("Error: " + throwable);
                         GWT.log("error", throwable);
+                        processFeeds();
                     }
 
-                    public void onSuccess(Feed feed) {
+                    public void onSuccess(AtomFeed feed) {
                         // TODO see http://hootsuite.com/dashboard#/tabs?id=3683313 for idea on feed panel
 
-                        JsArray<Entry> entries = feed.getEntries();
+                        JsArray<AtomEntry> entries = feed.getEntries();
                         for (int i = 0; i < entries.length(); i++) {
-                            Entry entry = entries.get(i);
-                            LogUtil.log(entry.getTitle());
+                            AtomEntry entry = entries.get(i);
+                            feeds.add(new AtomFeedEntry(entry));
                         }
 
+                        processFeeds();
                     }
                 });
-
-
     }
 
-
-    class TweetPanel extends FeedPanel {
-        public TweetPanel(String tweet_text, String user, String elapsed) {
+    private void processFeeds() {
+        if (feeds.size() > 0) {
+            for (FeedEntry entry : feeds) {
+                add(new FeedPanel(entry.getDate(), entry.getTitle(), entry.getIcon(), entry.getContent(), entry.getLink()));
+            }
         }
     }
 
-    public static class Feed extends JavaScriptObject {
+    public interface FeedEntry {
+        Date getDate();
+        String getTitle();
+        String getIcon();
+        String getContent();
+        String getLink();
+    }
 
-        protected Feed() {
+    public static class AtomFeedEntry implements FeedEntry, Comparable<FeedEntry> {
+        AtomEntry entry;
+        Date d;
+
+        public AtomFeedEntry(AtomEntry entry) {
+            this.entry = entry;
         }
 
-        public final native JsArray<Entry> getEntries() /*-{
+        // "2010-12-13T04:01:43Z"
+        // yyyy-MM-ddTHHmmss
+        public Date getDate() {
+            if (d == null) {
+                d = Utils.parseFeedDate(entry.getPublished());
+            }
+            return d;
+        }
+
+        public String getTitle() {
+            return entry.getTitle();
+        }
+
+        public String getIcon() {
+            return FeedPanel.RSS_IMAGE;
+        }
+
+        // TODO fixup content font
+        public String getContent() {
+            return entry.getContent();
+        }
+
+        public String getLink() {
+            return entry.getLink();
+        }
+
+        public int compareTo(FeedEntry e) {
+            int results =  getDate().compareTo(e.getDate());
+            if(results > 0) {
+                return -1;
+            }
+            else if (results < 0) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        }
+
+    }
+
+    public static class TweetEntry implements FeedEntry, Comparable<FeedEntry> {
+        Tweet entry;
+        Date d;
+
+        public TweetEntry(Tweet entry) {
+            this.entry = entry;
+        }
+
+        public Date getDate() {
+            if (d == null) {
+                d = Utils.parseHTTPDate(entry.getCreatedAt());
+            }
+            return d;
+        }
+
+        public String getTitle() {
+            return entry.getTitle();
+        }
+
+        public String getIcon() {
+            return entry.getIcon();
+        }
+
+        public final String getContent() {
+            return "<p>" + entry.getText() + "</p>";
+        }
+
+        public String getLink() {
+            return null;
+        }
+
+        public int compareTo(FeedEntry e) {
+            int results = getDate().compareTo(e.getDate());
+            if(results > 0) {
+                return -1;
+            }
+            else if (results < 0) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        }
+    }
+
+    public static class AtomFeed extends JavaScriptObject {
+        protected AtomFeed() {}
+
+        public final native JsArray<AtomEntry> getEntries() /*-{
             return this.query.results.entry;
         }-*/;
     }
 
-    public static class Entry extends JavaScriptObject {
-
-        protected Entry() {
-        }
+    public static class AtomEntry extends JavaScriptObject {
+        protected AtomEntry() {}
 
         public final native String getTitle() /*-{
-        return this.title;
+            return this.title;
         }-*/;
 
         public final native String getPublished() /*-{
-        return this.published;
+            return this.published;
         }-*/;
 
         public final native String getContent() /*-{
-        return this.content;
+            return this.content;
         }-*/;
 
         public final native String getLink() /*-{
-        return this.link;
+            return this.link.href;
         }-*/;
     }
 
+    public static class TwitterFeed extends JavaScriptObject {
+
+        protected TwitterFeed() {}
+
+        public final native JsArray<Tweet> getEntries() /*-{
+            return this.results;
+        }-*/;
+    }
+
+    public static class Tweet extends JavaScriptObject  {
+        protected Tweet() {}
+
+        public final native String getIcon() /*-{
+            return this.profile_image_url;
+        }-*/;
+
+        public final native String getCreatedAt() /*-{
+            return this.created_at;
+        }-*/;
+
+        public final native String getTitle() /*-{
+            return this.from_user;
+        }-*/;
+
+        public final native String getText() /*-{
+            return this.text;
+        }-*/;
+
+        public final native String getGeo() /*-{
+            return this.geo;
+        }-*/;
+    }
 
 }
