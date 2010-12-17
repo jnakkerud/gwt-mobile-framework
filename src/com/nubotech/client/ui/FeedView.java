@@ -48,6 +48,7 @@ public class FeedView extends View {
     }
 
     private void loadFeeds() {
+        toogleBusy();
         String twitter_url = "http://search.twitter.com/search.json?q=" + generateTwitterQuery();
 
         JsonpRequestBuilder twitter_req = new JsonpRequestBuilder();
@@ -116,6 +117,7 @@ public class FeedView extends View {
                 add(new FeedPanel(entry.getDate(), entry.getTitle(), entry.getIcon(), entry.getContent(), entry.getLink()));
             }
         }
+        toogleBusy();
     }
 
     public interface FeedEntry {
