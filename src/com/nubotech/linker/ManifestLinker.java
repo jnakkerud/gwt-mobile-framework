@@ -13,6 +13,7 @@ import com.google.gwt.core.ext.linker.AbstractLinker;
 import com.google.gwt.core.ext.linker.Artifact;
 import com.google.gwt.core.ext.linker.ArtifactSet;
 import com.google.gwt.core.ext.linker.CompilationResult;
+import com.google.gwt.core.ext.linker.ConfigurationProperty;
 import com.google.gwt.core.ext.linker.EmittedArtifact;
 import com.google.gwt.core.ext.linker.LinkerOrder;
 import com.google.gwt.core.ext.linker.SelectionProperty;
@@ -42,9 +43,7 @@ public class ManifestLinker extends AbstractLinker {
 
     List<String> exclusions = new ArrayList<String>();
 
-    public static String MODULE = "example";
     public static String MANIFEST_TEMPLATE = "manifest.tm";
-
 
     @Override
     public String getDescription() {
@@ -78,7 +77,7 @@ public class ManifestLinker extends AbstractLinker {
             if (artifact instanceof EmittedArtifact) {
                 String partialPath = ((EmittedArtifact) artifact).getPartialPath();
                 if (!((EmittedArtifact) artifact).isPrivate() && !exclude(partialPath)) {
-                    buf.append(MODULE + "/" + partialPath).append("\n");
+                    buf.append(context.getModuleName() + "/" + partialPath).append("\n");
                 }
             }
         }

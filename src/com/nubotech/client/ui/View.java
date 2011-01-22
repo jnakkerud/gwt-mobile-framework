@@ -15,6 +15,10 @@
  */
 package com.nubotech.client.ui;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NodeList;
+import com.google.gwt.dom.client.Node;
 import com.nubotech.client.ui.mobile.TouchableFlowPanel;
 import com.nubotech.client.ui.mobile.TouchableComposite;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -29,6 +33,7 @@ import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.nubotech.client.Utils;
 import com.nubotech.client.resources.Resources;
 
 /**
@@ -58,6 +63,7 @@ public abstract class View extends Composite implements HasHTML {
     protected ContentPanel header_panel;
 
     Transition.TransitionType transition_type;
+    private Node getElement;
 
     protected View() {
         this.parent = null;
@@ -205,7 +211,13 @@ public abstract class View extends Composite implements HasHTML {
 
     public void onSetCurrent(boolean is_current) {
         if (is_current == false) {
-            panelLabel.removeStyleName(Resources.INSTANCE.appearanceCss().clicked());
+            //panelLabel.removeStyleName(Resources.INSTANCE.appearanceCss().clicked());
+            NodeList<Element> node_list = Utils.getElementsByClassName(Resources.INSTANCE.appearanceCss().clicked(), (Node) getElement());
+            for (int i = 0; i < node_list.getLength(); i++) {
+                Element e = node_list.getItem(i);
+                GWT.log("element:"+e,null);
+                e.removeClassName(Resources.INSTANCE.appearanceCss().clicked());
+            }
         }
     }
 

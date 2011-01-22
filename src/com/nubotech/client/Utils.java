@@ -5,6 +5,9 @@
 
 package com.nubotech.client;
 
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NodeList;
+import com.google.gwt.dom.client.Node;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -121,5 +124,9 @@ public class Utils {
         }
         return feed_formatter.parse(ps);
     }
+
+    public static native NodeList<Element> getElementsByClassName(String clazz, Node ctx) /*-{
+        return ctx.getElementsByClassName(clazz);
+    }-*/;
 
 }

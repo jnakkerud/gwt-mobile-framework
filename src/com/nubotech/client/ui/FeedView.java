@@ -21,15 +21,12 @@ import java.util.TreeSet;
  * @author jonnakkerud
  */
 public class FeedView extends View {
-
-    String twitterQuery = "verbier";
-    String[] feedUrls = new String[] {"http://www.google.com/alerts/feeds/05173895962631213926/7161854547244649399"};
-
     Set<FeedEntry> feeds = new TreeSet<FeedEntry>();
+    FeedQuery feedQuery;
 
-    public FeedView(String title, View parent) {
+    public FeedView(String title, View parent, FeedQuery feedQuery) {
         super(title, parent);
-
+        this.feedQuery = feedQuery;
         Date d = new Date();
     }
 
@@ -43,7 +40,7 @@ public class FeedView extends View {
     }
 
     private String generateTwitterQuery() {
-        StringBuilder sb = new StringBuilder("\""+twitterQuery+"\"");
+        StringBuilder sb = new StringBuilder("\""+feedQuery.twitterQuery+"\"");
         return sb.toString();
     }
 
@@ -76,7 +73,7 @@ public class FeedView extends View {
         //http://developer.yahoo.com/yql/console/?q=select%20title.content%2C%20link.href%2C%20published%2C%20content.content%20from%20atom%20where%20url%3D%27http%3A%2F%2Fwww.google.com%2Falerts%2Ffeeds%2F05173895962631213926%2F7161854547244649399%27%20limit%2010%20%7C%20sort(field%3D%22published%22)%20%7C%20reverse()
         StringBuilder sb = new StringBuilder();
         sb.append("select title.content, link.href, published, content.content from atom where url in (");
-        String[] arS = feedUrls;
+        String[] arS = feedQuery.feedUrls;
         for (int i = 0; i < arS.length; i++) {
             sb.append("'").append(arS[i]).append("'");
             if (i+1 < arS.length) {
@@ -98,8 +95,6 @@ public class FeedView extends View {
                     }
 
                     public void onSuccess(AtomFeed feed) {
-                        // TODO see http://hootsuite.com/dashboard#/tabs?id=3683313 for idea on feed panel
-
                         JsArray<AtomEntry> entries = feed.getEntries();
                         for (int i = 0; i < entries.length(); i++) {
                             AtomEntry entry = entries.get(i);

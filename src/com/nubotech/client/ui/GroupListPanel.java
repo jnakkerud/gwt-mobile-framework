@@ -55,6 +55,10 @@ public class GroupListPanel extends Composite {
         add(new PanelLabel(label+ " " + Utils.createSpan(value, "font-weight: normal;"), true));
     }
 
+    public void add(String text) {
+        add(new PanelLabel(Utils.createSpan(text, "font-weight: normal;"), true));
+    }
+
     public void add(Toggle toggle) {
         toggle.addStyleName(Resources.INSTANCE.appearanceCss().groupedLabel());
         if (listPanel.getWidgetCount() > 0) {

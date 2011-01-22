@@ -59,7 +59,7 @@ public class Header extends Composite {
 
     private boolean hasBackButton() {
         boolean retval = false;
-        if (main.getWidget(0) != null) {
+        if (main.getWidgetCount() > 0 && main.getWidget(0) != null) {
             retval =  (main.getWidget(0).getStyleName().indexOf("back") != -1);
         }
         return retval;
