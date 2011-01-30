@@ -2,8 +2,8 @@
 <project name="example-app" default="build" basedir=".">
   <!-- Arguments to gwtc and devmode targets -->
   <!--<property name="gwt.args" value="-style OBF" />-->
-  <property name="gwt.args" value="-style PRETTY" />
-  <property name="gwt.version" value="gwt-2.1.0"/>
+  <property name="gwt.args" value="-style OBF" />
+  <property name="gwt.version" value="gwt-2.1.1"/>
   <property name="app.name" value="com.nubotech.Main"/>
 
   <!-- Configure path to GWT SDK -->

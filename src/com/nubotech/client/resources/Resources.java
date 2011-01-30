@@ -17,8 +17,10 @@ package com.nubotech.client.resources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource.Strict;
 import com.google.gwt.resources.client.DataResource;
 import com.google.gwt.resources.client.ExternalTextResource;
+import com.google.gwt.resources.client.TextResource;
 
 /**
  * A ResourceBundle that holds the references to the resources used by
@@ -57,5 +59,4 @@ public interface Resources extends ClientBundle {
 
     @Source("example2.htm")
     ExternalTextResource example2Text();
-
 }

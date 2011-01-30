@@ -453,7 +453,8 @@ html:not([lang*=""]) button.gButton {
   body {
     background: literal("-webkit-gradient(linear, left top, right top, from(#c5ccd4), color-stop(0.75, #c5ccd4), color-stop(0.75, transparent), to(transparent))");
     -webkit-background-size: 5px 100%;
-    -webkit-text-size-adjust: 100%;
+    -webkit-user-select:none;
+    -webkit-text-size-adjust:none;
   }
 }
 
@@ -692,3 +693,18 @@ p {
     margin:0.1em 0 0.5em;
 }
 
+.container {
+    position: relative;
+    overflow: auto;
+    /*z-index: 1;
+    position: relative;*/
+}
+
+@external .scroller;
+.scroller {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    overflow: hidden;
+    height: auto;
+}

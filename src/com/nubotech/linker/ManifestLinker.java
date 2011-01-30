@@ -66,8 +66,8 @@ public class ManifestLinker extends AbstractLinker {
         StringBuilder buf = new StringBuilder();
         SortedSet<CompilationResult> comp_set = artifacts.find(CompilationResult.class);
         for (CompilationResult artifact : comp_set) {
-            if (contains(artifact, "mobilesafari") == false) {
-                exclusions.add(artifact.getStrongName());
+            if (contains(artifact, "webkit") == false) {
+                //exclusions.add(artifact.getStrongName());
             }
         }
 
@@ -99,8 +99,10 @@ public class ManifestLinker extends AbstractLinker {
     }
 
     boolean contains(CompilationResult artifact, String value) {
+        //System.out.println(artifact.getPropertyMap());
         for (SortedMap<SelectionProperty, String> map : artifact.getPropertyMap()) {
             for (Map.Entry<SelectionProperty, String> entry : map.entrySet()) {
+                System.out.println(entry.getValue());
                 if (entry.getValue().equals(value)) {
                     return true;
 

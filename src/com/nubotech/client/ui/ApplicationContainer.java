@@ -53,16 +53,8 @@ public class ApplicationContainer extends Composite {
                     if (current_view != null) {
                         MobileSafariUtils.scrollToY(current_view.content_panel.getContents().getElement(), 11);
                     }
-
-                    // TODO set footer if needed
-                    //var h = document.getElementById(”footer”);
-                    // where 50 is the height of the panel
-                    //var h = (window.innerHeight + window.pageYOffset) – 50;
-                    //h.style.top = h.toString() + “px”;
-
                 }
             });
-
 
             // orientation
             final Screen screen = new Screen();
@@ -90,7 +82,6 @@ public class ApplicationContainer extends Composite {
                     }
                 }
             });
-
         }
 
     }
