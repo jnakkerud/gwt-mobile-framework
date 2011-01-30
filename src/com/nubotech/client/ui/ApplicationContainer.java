@@ -51,7 +51,7 @@ public class ApplicationContainer extends Composite {
                     body.addClassName(Resources.INSTANCE.appearanceCss().scrolled());
 
                     if (current_view != null) {
-                        MobileSafariUtils.scrollToY(current_view.header_panel.getContents().getElement(), 11);
+                        MobileSafariUtils.scrollToY(current_view.content_panel.getContents().getElement(), 11);
                     }
 
                     // TODO set footer if needed
@@ -84,6 +84,10 @@ public class ApplicationContainer extends Composite {
             screen.addHandler(new Screen.OrientationChangedHandler() {
                 public void orientationChanged(ScreenOrientation newOrientation) {
                     screen.updateOrientation();
+                    if (current_view != null) {
+                        // adjust the height
+                        current_view.content_panel.setHeight();
+                    }
                 }
             });
 
