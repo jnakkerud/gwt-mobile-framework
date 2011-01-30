@@ -32,14 +32,14 @@ class ScrollToCommand implements ScheduledCommand {
 
     public ScrollToCommand(View view) {
         this.view = view;
-        Style style = view.header_panel.getContents().getElement().getStyle();
+        Style style = view.content_panel.getContents().getElement().getStyle();
         String top_str = (style.getTop().length() == 0 ? "0" : style.getTop());
         yPos = (int) Utils.parseDouble(top_str);
     }
 
     public void execute() {
         if (Utils.isMobile()) {
-            MobileSafariUtils.scrollToY(view.header_panel.getContents().getElement(), yPos);
+            MobileSafariUtils.scrollToY(view.content_panel.getContents().getElement(), yPos);
         }
         else {
             nativeScrollTo(yPos);
