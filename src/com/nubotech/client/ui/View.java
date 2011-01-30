@@ -20,7 +20,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.dom.client.Node;
 import com.nubotech.client.ui.mobile.TouchableFlowPanel;
-import com.nubotech.client.ui.mobile.TouchableComposite;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
@@ -60,10 +59,9 @@ public abstract class View extends Composite implements HasHTML {
     private HasText hasText;
     private HasHTML hasHtml;
 
-    protected ContentPanel header_panel;
+    protected ContentPanel content_panel;
 
     Transition.TransitionType transition_type;
-    private Node getElement;
 
     protected View() {
         this.parent = null;
@@ -100,14 +98,11 @@ public abstract class View extends Composite implements HasHTML {
             header.setButton(backButtonLabel(), true, parentClickListener);
         }
 
-        header_panel = new ContentPanel();
-        header_panel.setHeader(header);
+        content_panel = new ContentPanel();
+        content_panel.setHeader(header);
+        content_panel.setContents(contents);
 
-        SimplePanel sp = new SimplePanel();
-        sp.setWidget(new TouchableComposite(contents));
-        header_panel.setContainer(sp);
-
-        initWidget(header_panel);
+        initWidget(content_panel);
         getElement().setId(getShortTitle());
         addStyleName(Resources.INSTANCE.appearanceCss().view());
     }
@@ -117,7 +112,7 @@ public abstract class View extends Composite implements HasHTML {
     }
 
     public void setFooter(Widget w) {
-        header_panel.setFooter(w);
+        content_panel.setFooter(w);
     }
 
     public void add(Widget w) {
@@ -215,7 +210,6 @@ public abstract class View extends Composite implements HasHTML {
             NodeList<Element> node_list = Utils.getElementsByClassName(Resources.INSTANCE.appearanceCss().clicked(), (Node) getElement());
             for (int i = 0; i < node_list.getLength(); i++) {
                 Element e = node_list.getItem(i);
-                GWT.log("element:"+e,null);
                 e.removeClassName(Resources.INSTANCE.appearanceCss().clicked());
             }
         }
@@ -231,7 +225,6 @@ public abstract class View extends Composite implements HasHTML {
             throw new RuntimeException("SliderPanel has no parent");
         }
 
- 
         if (ApplicationContainer.get().getHandler(parent.getShortTitle()) != null) {
             History.newItem(parent.getShortTitle());
         }
