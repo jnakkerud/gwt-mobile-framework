@@ -16,7 +16,7 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.nubotech.client.resources.Resources;
+import com.nubotech.client.resources.MobileResources;
 
 /**
  *
@@ -94,7 +94,7 @@ public class Toggle extends Composite implements HasClickHandlers {
 
         public ToggleWidget(boolean sel) {
             setElement(Document.get().createDivElement());
-            setStyleName(Resources.INSTANCE.appearanceCss().iPhoneCheckContainer());
+            setStyleName(MobileResources.INSTANCE.appearanceCss().iPhoneCheckContainer());
             getElement().setAttribute("style", "width:83px;");
 
             sinkEvents(Event.ONCLICK);
@@ -102,7 +102,7 @@ public class Toggle extends Composite implements HasClickHandlers {
             //<input type="checkbox" class="normal" checked="checked"/>
 
             lOn = Document.get().createLabelElement();
-            lOn.setClassName(Resources.INSTANCE.appearanceCss().iPhoneCheckLabelOn());
+            lOn.setClassName(MobileResources.INSTANCE.appearanceCss().iPhoneCheckLabelOn());
             getElement().appendChild(lOn);
             sOn = Document.get().createSpanElement();
             sOn.setInnerText("ON");
@@ -111,7 +111,7 @@ public class Toggle extends Composite implements HasClickHandlers {
             // <label class="iPhoneCheckLabelOff" id="" style="width: 143px;"><span style="margin-right: 0px;">Male</span></label>
             //<label class="iPhoneCheckLabelOff" id="" style="width: 143px;"><span style="margin-right: -86px;">Male</span></label>
             lOff = Document.get().createLabelElement();
-            lOff.setClassName(Resources.INSTANCE.appearanceCss().iPhoneCheckLabelOff());
+            lOff.setClassName(MobileResources.INSTANCE.appearanceCss().iPhoneCheckLabelOff());
             getElement().appendChild(lOff);
             sOff = Document.get().createSpanElement();
             sOff.setInnerText("OFF");
@@ -121,13 +121,13 @@ public class Toggle extends Composite implements HasClickHandlers {
             //<div class="iPhoneCheckHandle" style="width: 56px; left: 0px;"><div class="iPhoneCheckHandleRight"><div class="iPhoneCheckHandleCenter"/></div></div>
             //<div class="iPhoneCheckHandle" style="width: 56px; left: 86px;"><div class="iPhoneCheckHandleRight"><div class="iPhoneCheckHandleCenter"/></div></div>
             handle = Document.get().createDivElement();
-            handle.setClassName(Resources.INSTANCE.appearanceCss().iPhoneCheckHandle());
+            handle.setClassName(MobileResources.INSTANCE.appearanceCss().iPhoneCheckHandle());
             getElement().appendChild(handle);
             Element handleR = Document.get().createDivElement();
-            handleR.setClassName(Resources.INSTANCE.appearanceCss().iPhoneCheckHandleRight());
+            handleR.setClassName(MobileResources.INSTANCE.appearanceCss().iPhoneCheckHandleRight());
             handle.appendChild(handleR);
             Element handleC = Document.get().createDivElement();
-            handleC.setClassName(Resources.INSTANCE.appearanceCss().iPhoneCheckHandleCenter());
+            handleC.setClassName(MobileResources.INSTANCE.appearanceCss().iPhoneCheckHandleCenter());
             handleR.appendChild(handleC);
 
             setSelected(sel);

@@ -42,7 +42,7 @@ import com.nubotech.client.geo.Position;
 import com.nubotech.client.geo.PositionCallback;
 import com.nubotech.client.geo.PositionError;
 import com.nubotech.client.geo.PositionOptions;
-import com.nubotech.client.resources.Resources;
+import com.nubotech.client.resources.MobileResources;
 import com.nubotech.client.ui.ApplicationContainer;
 import com.nubotech.client.ui.FeedQuery;
 import com.nubotech.client.ui.FeedView;
@@ -106,7 +106,7 @@ public class MainEntryPoint implements EntryPoint {
             }
         });
 
-        Resources.INSTANCE.appearanceCss().ensureInjected();
+        MobileResources.INSTANCE.appearanceCss().ensureInjected();
 
         processHistoryToken(History.getToken());
 
@@ -128,7 +128,7 @@ public class MainEntryPoint implements EntryPoint {
 
         // add the footer
         final FlowPanel bar = new FlowPanel();
-        bar.addStyleName(Resources.INSTANCE.appearanceCss().buttonBar());
+        bar.addStyleName(MobileResources.INSTANCE.appearanceCss().buttonBar());
         GButton settings_btn = new GButton("Settings");
         settings_btn.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
@@ -154,7 +154,7 @@ public class MainEntryPoint implements EntryPoint {
 
             @Override
             protected void onLoad() {
-                addStyleName(Resources.INSTANCE.appearanceCss().SliderPanel());
+                addStyleName(MobileResources.INSTANCE.appearanceCss().SliderPanel());
                 add(sectionExample);
                 add(detailPanel);
                 add(examplePanel);
@@ -207,7 +207,7 @@ public class MainEntryPoint implements EntryPoint {
         protected void onLoad() {
             for (String s : details) {
                 HTML h = new HTML(s);
-                h.addStyleName(Resources.INSTANCE.appearanceCss().padding5());
+                h.addStyleName(MobileResources.INSTANCE.appearanceCss().padding5());
                 DOM.setStyleAttribute(h.getElement(), "margin", "5px");
                 add(h);
             }
@@ -284,7 +284,7 @@ public class MainEntryPoint implements EntryPoint {
                 public void onOpen(OpenEvent<SectionPanel> event) {
                     section1.clear();
                     try {
-                        Resources.INSTANCE.example1Text().getText(new ResourceCallback<TextResource>() {
+                        MobileResources.INSTANCE.example1Text().getText(new ResourceCallback<TextResource>() {
                             public void onError(ResourceException e) {
                                 //throw new UnsupportedOperationException("Not supported yet.");
                             }
@@ -305,7 +305,7 @@ public class MainEntryPoint implements EntryPoint {
                 public void onOpen(OpenEvent<SectionPanel> event) {
                     section2.clear();
                     try {
-                        Resources.INSTANCE.example2Text().getText(new ResourceCallback<TextResource>() {
+                        MobileResources.INSTANCE.example2Text().getText(new ResourceCallback<TextResource>() {
 
                             public void onError(ResourceException e) {
                                 //throw new UnsupportedOperationException("Not supported yet.");
@@ -457,7 +457,7 @@ public class MainEntryPoint implements EntryPoint {
 
             // show primary resort feeds
             SimplePanel feedsContainer = new SimplePanel();
-            feedsContainer.addStyleName(Resources.INSTANCE.appearanceCss().sectionContents());
+            feedsContainer.addStyleName(MobileResources.INSTANCE.appearanceCss().sectionContents());
             add(feedsContainer);
 
             GroupListPanel feeds = new GroupListPanel("Feeds");
@@ -480,7 +480,7 @@ public class MainEntryPoint implements EntryPoint {
 
             // show filters
             SimplePanel filtersContainer = new SimplePanel();
-            filtersContainer.addStyleName(Resources.INSTANCE.appearanceCss().sectionContents());
+            filtersContainer.addStyleName(MobileResources.INSTANCE.appearanceCss().sectionContents());
             add(filtersContainer);
             GroupListPanel filterGrp = new GroupListPanel("Filters");
             filtersContainer.setWidget(filterGrp);
@@ -494,7 +494,7 @@ public class MainEntryPoint implements EntryPoint {
             filterGrp.add(toggle2);
 
             SimplePanel fieldsContainer = new SimplePanel();
-            fieldsContainer.addStyleName(Resources.INSTANCE.appearanceCss().sectionContents());
+            fieldsContainer.addStyleName(MobileResources.INSTANCE.appearanceCss().sectionContents());
             add(fieldsContainer);
             GroupListPanel fieldsGrp = new GroupListPanel("Other");
             fieldsContainer.setWidget(fieldsGrp);

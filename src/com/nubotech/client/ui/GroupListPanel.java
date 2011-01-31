@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.nubotech.client.Utils;
-import com.nubotech.client.resources.Resources;
+import com.nubotech.client.resources.MobileResources;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,24 +29,24 @@ public class GroupListPanel extends Composite {
 
     public GroupListPanel(String title) {
         initWidget(main = new FlowPanel());
-        addStyleName(Resources.INSTANCE.appearanceCss().groupedPanel());
+        addStyleName(MobileResources.INSTANCE.appearanceCss().groupedPanel());
 
         if (title != null) {
             UnsunkLabel groupedTitle = new UnsunkLabel(title);
-            groupedTitle.addStyleName(Resources.INSTANCE.appearanceCss().groupedTitle());
+            groupedTitle.addStyleName(MobileResources.INSTANCE.appearanceCss().groupedTitle());
             main.add(groupedTitle);
         }
 
         listPanel = new FlowPanel();
-        listPanel.addStyleName(Resources.INSTANCE.appearanceCss().groupedList());
+        listPanel.addStyleName(MobileResources.INSTANCE.appearanceCss().groupedList());
         main.add(listPanel);        
     }
 
     public void add(PanelLabel label) {
-        label.removeStyleName(Resources.INSTANCE.appearanceCss().PanelLabel());
-        label.addStyleName(Resources.INSTANCE.appearanceCss().groupedLabel());
+        label.removeStyleName(MobileResources.INSTANCE.appearanceCss().PanelLabel());
+        label.addStyleName(MobileResources.INSTANCE.appearanceCss().groupedLabel());
         if (listPanel.getWidgetCount() > 0) {
-            label.addStyleName(Resources.INSTANCE.appearanceCss().ChildLabel());
+            label.addStyleName(MobileResources.INSTANCE.appearanceCss().ChildLabel());
         }
         listPanel.add(label);
     }
@@ -60,16 +60,16 @@ public class GroupListPanel extends Composite {
     }
 
     public void add(Toggle toggle) {
-        toggle.addStyleName(Resources.INSTANCE.appearanceCss().groupedLabel());
+        toggle.addStyleName(MobileResources.INSTANCE.appearanceCss().groupedLabel());
         if (listPanel.getWidgetCount() > 0) {
-            toggle.addStyleName(Resources.INSTANCE.appearanceCss().ChildLabel());
+            toggle.addStyleName(MobileResources.INSTANCE.appearanceCss().ChildLabel());
         }
         listPanel.add(toggle);
     }
 
     public void add(SingleField field) {
         if (listPanel.getWidgetCount() > 0) {
-            field.addStyleName(Resources.INSTANCE.appearanceCss().ChildLabel());
+            field.addStyleName(MobileResources.INSTANCE.appearanceCss().ChildLabel());
         }
         listPanel.add(field);
     }

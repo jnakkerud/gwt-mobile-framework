@@ -33,7 +33,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.nubotech.client.Utils;
-import com.nubotech.client.resources.Resources;
+import com.nubotech.client.resources.MobileResources;
 
 /**
  * This is the base class for all of the major UI panels. It is designed to fill
@@ -104,7 +104,7 @@ public abstract class View extends Composite implements HasHTML {
 
         initWidget(content_panel);
         getElement().setId(getShortTitle());
-        addStyleName(Resources.INSTANCE.appearanceCss().view());
+        addStyleName(MobileResources.INSTANCE.appearanceCss().view());
     }
 
     protected String backButtonLabel() {
@@ -193,7 +193,7 @@ public abstract class View extends Composite implements HasHTML {
         if (loading_el == null) {
             loading_el = DOM.createDiv();
             loading_el.setInnerText("Loading...");
-            loading_el.addClassName(Resources.INSTANCE.appearanceCss().loading());
+            loading_el.addClassName(MobileResources.INSTANCE.appearanceCss().loading());
             com.google.gwt.user.client.Element e = RootPanel.getBodyElement();
             e.appendChild(loading_el);
 
@@ -207,10 +207,10 @@ public abstract class View extends Composite implements HasHTML {
     public void onSetCurrent(boolean is_current) {
         if (is_current == false) {
             //panelLabel.removeStyleName(Resources.INSTANCE.appearanceCss().clicked());
-            NodeList<Element> node_list = Utils.getElementsByClassName(Resources.INSTANCE.appearanceCss().clicked(), (Node) getElement());
+            NodeList<Element> node_list = Utils.getElementsByClassName(MobileResources.INSTANCE.appearanceCss().clicked(), (Node) getElement());
             for (int i = 0; i < node_list.getLength(); i++) {
                 Element e = node_list.getItem(i);
-                e.removeClassName(Resources.INSTANCE.appearanceCss().clicked());
+                e.removeClassName(MobileResources.INSTANCE.appearanceCss().clicked());
             }
         }
     }

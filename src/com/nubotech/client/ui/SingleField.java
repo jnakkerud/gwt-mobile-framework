@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.nubotech.client.resources.Resources;
+import com.nubotech.client.resources.MobileResources;
 
 /**
  *
@@ -24,7 +24,7 @@ public class SingleField extends Composite {
 
     public SingleField(String name, String label, Widget valueWidget) {
         initWidget(fp = new FlowPanel());
-        setStyleName(Resources.INSTANCE.appearanceCss().singleField());
+        setStyleName(MobileResources.INSTANCE.appearanceCss().singleField());
 
         // create the label
         if (!(valueWidget instanceof ListBox)) {

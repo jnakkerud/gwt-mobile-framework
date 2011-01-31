@@ -11,7 +11,7 @@ import com.google.gwt.resources.client.CssResource;
  *
  * @author jonnakkerud
  */
-public interface AppearanceCss extends CssResource {
+public interface MobileAppearanceCss extends CssResource {
     String titleLabel();
 
     String snippit();

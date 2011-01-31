@@ -21,7 +21,7 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.nubotech.client.resources.Resources;
+import com.nubotech.client.resources.MobileResources;
 
 /**
  * A widget that represents a single label. A label might represent a feed, and
@@ -52,11 +52,11 @@ public class PanelLabel extends SimplePanel implements HasText {
         //this.widget = widget;
 
         setWidget(widget);
-        addStyleName(Resources.INSTANCE.appearanceCss().PanelLabel());
+        addStyleName(MobileResources.INSTANCE.appearanceCss().PanelLabel());
 
         if (primary != null) {
             sinkEvents(Event.ONCLICK);
-            addStyleName(Resources.INSTANCE.appearanceCss().hasCommand());
+            addStyleName(MobileResources.INSTANCE.appearanceCss().hasCommand());
         }
     }
 
@@ -72,7 +72,7 @@ public class PanelLabel extends SimplePanel implements HasText {
     public void onBrowserEvent(Event e) {
         switch (DOM.eventGetType(e)) {
             case Event.ONCLICK: {
-                addStyleName(Resources.INSTANCE.appearanceCss().clicked());
+                addStyleName(MobileResources.INSTANCE.appearanceCss().clicked());
                 primary.execute();
             }
         }

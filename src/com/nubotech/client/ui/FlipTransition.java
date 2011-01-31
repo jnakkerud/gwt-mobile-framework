@@ -6,7 +6,7 @@
 package com.nubotech.client.ui;
 
 import com.nubotech.client.LogUtil;
-import com.nubotech.client.resources.Resources;
+import com.nubotech.client.resources.MobileResources;
 
 /**
  * TODO get working
@@ -28,13 +28,13 @@ public class FlipTransition extends Transition {
         //back.addStyleName(Resources.INSTANCE.appearanceCss().back());
 
         if (front.getStyleName().indexOf("flip") > -1) {
-        front.removeStyleName(Resources.INSTANCE.appearanceCss().flip());
-        back.removeStyleName(Resources.INSTANCE.appearanceCss().flip());
+        front.removeStyleName(MobileResources.INSTANCE.appearanceCss().flip());
+        back.removeStyleName(MobileResources.INSTANCE.appearanceCss().flip());
 
         }
         else {
-        front.addStyleName(Resources.INSTANCE.appearanceCss().flip());
-        back.addStyleName(Resources.INSTANCE.appearanceCss().flip());
+        front.addStyleName(MobileResources.INSTANCE.appearanceCss().flip());
+        back.addStyleName(MobileResources.INSTANCE.appearanceCss().flip());
 
         }
 

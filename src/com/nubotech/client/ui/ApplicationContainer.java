@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.History;
 import com.nubotech.client.Utils;
-import com.nubotech.client.resources.Resources;
+import com.nubotech.client.resources.MobileResources;
 import com.nubotech.client.ui.mobile.Screen;
 import com.nubotech.client.ui.mobile.ScreenOrientation;
 import java.util.HashMap;
@@ -48,7 +48,7 @@ public class ApplicationContainer extends Composite {
                 public void onWindowScroll(ScrollEvent event) {
                     //$i.utils.addClass(document.body, "scrolled");
                     Element body = RootPanel.getBodyElement();
-                    body.addClassName(Resources.INSTANCE.appearanceCss().scrolled());
+                    body.addClassName(MobileResources.INSTANCE.appearanceCss().scrolled());
 
                     if (current_view != null) {
                         MobileSafariUtils.scrollToY(current_view.content_panel.getContents().getElement(), 11);
@@ -61,7 +61,7 @@ public class ApplicationContainer extends Composite {
             screen.addHandler(new Screen.OrientationChangedHandler() {
                 public void orientationChanged(ScreenOrientation newOrientation) {
                     Element body = RootPanel.getBodyElement();
-                    body.removeClassName(Resources.INSTANCE.appearanceCss().scrolled());
+                    body.removeClassName(MobileResources.INSTANCE.appearanceCss().scrolled());
                 }
             });
 

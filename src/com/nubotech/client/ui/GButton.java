@@ -8,7 +8,7 @@ package com.nubotech.client.ui;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ButtonBase;
-import com.nubotech.client.resources.Resources;
+import com.nubotech.client.resources.MobileResources;
 
 /**
  *
@@ -19,7 +19,7 @@ import com.nubotech.client.resources.Resources;
 public class GButton extends ButtonBase {
     public GButton(String text) {
         super(Document.get().createPushButtonElement());
-        setStyleName(Resources.INSTANCE.appearanceCss().gButton());
+        setStyleName(MobileResources.INSTANCE.appearanceCss().gButton());
 
         //<button type="button" class="btn"><span><span><b>&nbsp;</b><u>button</u></span></span></button>
         setHTML("<span><span><b>&nbsp;</b><u>" + text + "</u></span></span>");

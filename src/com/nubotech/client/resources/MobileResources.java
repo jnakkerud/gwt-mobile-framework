@@ -26,15 +26,15 @@ import com.google.gwt.resources.client.TextResource;
  * A ResourceBundle that holds the references to the resources used by
  * GwtFeedReader.
  */
-public interface Resources extends ClientBundle {
+public interface MobileResources extends ClientBundle {
 
-    public static final Resources INSTANCE = (Resources) GWT.create(Resources.class);
+    public static final MobileResources INSTANCE = (MobileResources) GWT.create(MobileResources.class);
 
     /**
      * The non-structural CSS rules.
      */
-    @Source("appearance.css")
-    public AppearanceCss appearanceCss();
+    @Source("MobileAppearance.css")
+    public MobileAppearanceCss appearanceCss();
 
     @Source("sectionBg.png")
     public DataResource group();

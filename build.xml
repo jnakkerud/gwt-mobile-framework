@@ -75,15 +75,15 @@
   <target name="clean" description="Cleans this project">
     <delete dir="war/WEB-INF/classes" failonerror="false" />
     <delete dir="war/example" failonerror="false" />
+    <delete dir="dist" failonerror="false" />
   </target>
 
-  <target name="jar" depends= "build" description="Jar the project">
+  <target name="jar" depends="build" description="Jar the project">
       <mkdir dir="dist"/>
-      <jar destfile="dist/mobile-gwt.jar"
-       basedir="war/WEB-INF/classes"
-       includes="mypackage/test/**"
-       excludes="**/Test.class"
-      />
+      <copy todir="war/WEB-INF/classes">
+          <fileset dir="src"/>
+      </copy>
+      <jar destfile="dist/mobile-gwt.jar" basedir="war/WEB-INF/classes"/>
   </target>
 
 </project>

@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to="example">
-    <inherits name="com.google.gwt.user.User"/>
-    <inherits name='com.google.gwt.json.JSON'/>
-    <!--<inherits name='com.google.gwt.user.MobileSafari'/>-->
-    <inherits name="com.google.code.gwt.storage.Html5Storage" />
-    <inherits name="com.google.gwt.jsonp.Jsonp" />
-
-    <define-linker name="manifest" class="com.nubotech.linker.ManifestLinker" />
-    <add-linker name="manifest"/>
-
+    <inherits name="com.nubotech.Mobile"/>
     <entry-point class="com.nubotech.client.MainEntryPoint"/>
-	<!-- Do not define servlets here, use web.xml -->
     <set-property name="user.agent" value="safari"/>
-
 </module>

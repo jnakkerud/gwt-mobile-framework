@@ -26,7 +26,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.nubotech.client.resources.Resources;
+import com.nubotech.client.resources.MobileResources;
 
 /**
  *
@@ -59,7 +59,7 @@ public class SectionPanel extends Composite implements HasOpenHandlers<SectionPa
 
         if (title != null) {
             header = new HeaderContainer(isDisclosure);
-            header.addStyleName(Resources.INSTANCE.appearanceCss().sectionBar());
+            header.addStyleName(MobileResources.INSTANCE.appearanceCss().sectionBar());
 
             if (isDisclosure) {
                 contents.setVisible(false);
@@ -68,7 +68,7 @@ public class SectionPanel extends Composite implements HasOpenHandlers<SectionPa
             } else {
                 UnsunkLabel titleLabel = new UnsunkLabel("");
                 titleLabel.setText(title);
-                titleLabel.addStyleName(Resources.INSTANCE.appearanceCss().titleLabel());
+                titleLabel.addStyleName(MobileResources.INSTANCE.appearanceCss().titleLabel());
                 header.setWidget(titleLabel);
             }
 
@@ -76,7 +76,7 @@ public class SectionPanel extends Composite implements HasOpenHandlers<SectionPa
         }
 
         // contents
-        contents.addStyleName(Resources.INSTANCE.appearanceCss().sectionContents());
+        contents.addStyleName(MobileResources.INSTANCE.appearanceCss().sectionContents());
         main.add(contents);
     }
 
@@ -189,7 +189,7 @@ public class SectionPanel extends Composite implements HasOpenHandlers<SectionPa
 
             Element textWrapper = DOM.createDiv();
             DOM.setElementProperty(textWrapper.<com.google.gwt.user.client.Element> cast(),
-            "className", Resources.INSTANCE.appearanceCss().titleLabel());
+            "className", MobileResources.INSTANCE.appearanceCss().titleLabel());
             DOM.setInnerText(textWrapper, text);
             DOM.appendChild(labelTD, textWrapper);
 

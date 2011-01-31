@@ -7,7 +7,7 @@ package com.nubotech.client.ui;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.nubotech.client.resources.Resources;
+import com.nubotech.client.resources.MobileResources;
 
 /**
  *
@@ -27,7 +27,7 @@ public final class SelectLabel extends PanelLabel {
 
     public SelectLabel(String text, boolean html, boolean selected, SelectGroup grp) {
         super(text, html, null);
-        addStyleName(Resources.INSTANCE.appearanceCss().selectLabel());
+        addStyleName(MobileResources.INSTANCE.appearanceCss().selectLabel());
 
         this.grp = grp;
         this.grp.addSelectLabel(this);
@@ -49,11 +49,11 @@ public final class SelectLabel extends PanelLabel {
 
     void select() {
         grp.setSelected(this);
-        addStyleName(Resources.INSTANCE.appearanceCss().selected());
+        addStyleName(MobileResources.INSTANCE.appearanceCss().selected());
     }
 
     void unselect() {
-        removeStyleName(Resources.INSTANCE.appearanceCss().selected());
+        removeStyleName(MobileResources.INSTANCE.appearanceCss().selected());
     }
 
     @Override
