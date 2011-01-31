@@ -84,6 +84,12 @@ public class ContentPanel extends TouchableFlowPanel {
         container.setHeight(wrapperH+"px");
     }
 
+    public void refresh() {
+        if (container instanceof MobileScrollPanel) {
+            ((MobileScrollPanel)container).refresh();
+        }
+    }
+
     class HeaderWrapper extends TouchableComposite {
         SimplePanel p;
         public HeaderWrapper(Widget wrapped) {

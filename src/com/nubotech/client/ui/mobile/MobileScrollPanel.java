@@ -32,8 +32,15 @@ public class MobileScrollPanel extends SimplePanel {
         }
     }
 
+    public void refresh() {
+        if (scroller != null) {
+            scroller.refresh();
+        }
+    }
+
     @Override
     protected com.google.gwt.user.client.Element getContainerElement() {
         return container.cast();
     }
+
 }

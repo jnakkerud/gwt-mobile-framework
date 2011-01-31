@@ -12,6 +12,9 @@ package com.nubotech.client;
 import com.google.code.gwt.storage.client.Storage;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -20,17 +23,22 @@ import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.http.client.URL;
+import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.resources.client.ResourceCallback;
 import com.google.gwt.resources.client.ResourceException;
 import com.google.gwt.resources.client.TextResource;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -38,12 +46,14 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.nubotech.client.geo.GeoLocation;
+import com.nubotech.client.geo.GeoPoint;
 import com.nubotech.client.geo.Position;
 import com.nubotech.client.geo.PositionCallback;
 import com.nubotech.client.geo.PositionError;
 import com.nubotech.client.geo.PositionOptions;
 import com.nubotech.client.resources.MobileResources;
 import com.nubotech.client.ui.ApplicationContainer;
+import com.nubotech.client.ui.ContentPanel;
 import com.nubotech.client.ui.FeedQuery;
 import com.nubotech.client.ui.FeedView;
 import com.nubotech.client.ui.GButton;
@@ -232,16 +242,13 @@ public class MainEntryPoint implements EntryPoint {
             GroupListPanel grp = new GroupListPanel();
             grp.add("Label1", "Description1");
             grp.add("Label2", "Description2");
-
-            final DetailPanel wp = new DetailPanel(new String[]{"This is a string"}, "Forecast", ExamplePanel.this);
-            PanelLabel foreCast = new PanelLabel("Forecast", true, new Command() {
-                public void execute() {
-                    wp.enter();
-                }
-            });
-            wp.setLabel(foreCast);
-            grp.add(foreCast);
-
+            grp.add("Label1", "Description1");
+            grp.add("Label2", "Description2");
+            grp.add("Label1", "Description1");
+            grp.add("Label2", "Description2");
+            grp.add("Label1", "Description1");
+            grp.add("Label2", "Description2");
+            grp.add("Label2", "Description2");
             container.add(grp);
 
             // add a second longer group
@@ -263,13 +270,77 @@ public class MainEntryPoint implements EntryPoint {
             grp2.add("Label66", "Description66");
             container.add(grp2);
 
+            final GroupListPanel forecast_grp = new GroupListPanel("Forecast");
+            container.add(forecast_grp);
+
+            GroupListPanel grp3 = new GroupListPanel("The Last Group");
+            final DetailPanel detail_panel = new DetailPanel(new String[]{"This is a string"}, "Detail1", ExamplePanel.this);
+            PanelLabel label_1 = new PanelLabel("Label 1", true, new Command() {
+                public void execute() {
+                    detail_panel.enter();
+                }
+            });
+            //grp3.setLabel(label_1);
+            grp3.add(label_1);
+
+            final DetailPanel detail_panel_2 = new DetailPanel(new String[]{"This is a string"}, "Detail2", ExamplePanel.this);
+            PanelLabel label_2 = new PanelLabel("Label 2", true, new Command() {
+                public void execute() {
+                    detail_panel_2.enter();
+                }
+            });
+            //grp3.setLabel(label_2);
+            grp3.add(label_2);
+            container.add(grp3);
+
+            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                public void execute() {
+                    loadForecast(forecast_grp);
+                }
+            });
+
             add(container);
         }
 
         public String getShortTitle() {
             return "Grouped";
         }
+
+
+        private void loadForecast(final GroupListPanel forecast_grp) {
+            GeoPoint geo_p = new GeoPoint(46.1,7.216667);
+            StringBuilder sb = new StringBuilder();
+            sb.append("select * from xml where url='http://www.google.com/ig/api?weather=,,,");
+            sb.append(geo_p).append("'");
+            String qry = sb.toString();
+
+            String url = "http://query.yahooapis.com/v1/public/yql?q=" + RestEncoder.encodeUrlString(qry) + "&format=json";
+
+            JsonpRequestBuilder forecast_req = new JsonpRequestBuilder();
+            forecast_req.requestObject(url,
+                    new AsyncCallback<ThisWeatherResult>() {
+
+                        public void onFailure(Throwable throwable) {
+                            GWT.log("error", throwable);
+                            //toogleBusy(); // TODO spelling
+                        }
+
+                        public void onSuccess(ThisWeatherResult result) {
+                            JsArray<ThisForecastCondition> entries = result.getForecast();
+                            for (int i = 0; i < entries.length(); i++) {
+                                ThisForecastCondition forecast = entries.get(i);
+                                forecast_grp.add(new PanelLabel(new ForecastWidget(forecast), null));
+                            }
+
+                            //toogleBusy(); // TODO spelling
+                            content_panel.refresh();
+                        }
+                    });
+
+        }
+
     }
+
 
     class SectionPanelExample extends View {
 
@@ -291,6 +362,7 @@ public class MainEntryPoint implements EntryPoint {
 
                             public void onSuccess(TextResource resource) {
                                 section1.add(new HTML(resource.getText()));
+                                content_panel.refresh();
                             }
                         });
                         //section1.add(new HTML(Resources.INSTANCE.example1Text()));
@@ -313,6 +385,7 @@ public class MainEntryPoint implements EntryPoint {
 
                             public void onSuccess(TextResource resource) {
                                 section2.add(new HTML(resource.getText()));
+                                content_panel.refresh();
                             }
                         });
                         //section1.add(new HTML(Resources.INSTANCE.example1Text()));
@@ -333,6 +406,13 @@ public class MainEntryPoint implements EntryPoint {
         public WeatherPanel(View parent) {
             super("Current Weather", parent);
         }
+
+        /*@Override
+        protected ContentPanel createContentPanel() {
+            ContentPanel cp = new ContentPanel();
+            cp.setContainer(new SimplePanel());
+            return cp;
+        }*/
 
         @Override
         protected void onLoad() {
@@ -355,6 +435,7 @@ public class MainEntryPoint implements EntryPoint {
 
                     add(f);
 
+                    content_panel.refresh();
                 }
 
                 public void onFailure(PositionError error) {
@@ -516,6 +597,64 @@ public class MainEntryPoint implements EntryPoint {
         protected String backButtonLabel() {
             return "Cancel";
         }
+
+    }
+
+    class ForecastWidget extends Composite {
+        ThisForecastCondition forecast_condition;
+        FlowPanel main;
+        public ForecastWidget(ThisForecastCondition condition) {
+            this.forecast_condition = condition;
+            initWidget(main = new FlowPanel());
+            //addStyleName("forecastPanel");
+            initGui();
+        }
+
+        private void initGui() {
+            Image img = new Image("http://www.google.ru"+forecast_condition.getIcon());
+            img.getElement().getStyle().setFloat(com.google.gwt.dom.client.Style.Float.LEFT);
+            main.add(img);
+            String high_low = "H" + Utils.createSpan(forecast_condition.getHigh()+"F", "font-weight: normal;") + "L" + Utils.createSpan(forecast_condition.getLow()+"F", "font-weight: normal;");
+            HTML content = new HTML(forecast_condition.getDayOfWeek() + "<br/>" + high_low + " " + forecast_condition.getCondition());
+            DOM.setStyleAttribute(content.getElement(), "float", "left");
+            DOM.setStyleAttribute(content.getElement(), "paddingLeft", "10px");
+            main.add(content);
+        }
+    }
+
+
+    public static class ThisWeatherResult extends JavaScriptObject {
+        protected ThisWeatherResult() {}
+
+        public final native JsArray<ThisForecastCondition> getForecast() /*-{
+            return this.query.results.xml_api_reply.weather.forecast_conditions;
+        }-*/;
+
+    }
+
+
+    public static class ThisForecastCondition extends JsArray {
+        protected ThisForecastCondition() {}
+
+        public final native String getDayOfWeek() /*-{
+            return this.day_of_week.data;
+        }-*/;
+
+        public final native String getLow() /*-{
+            return this.low.data;
+        }-*/;
+
+        public final native String getHigh() /*-{
+            return this.high.data;
+        }-*/;
+
+        public final native String getIcon() /*-{
+            return this.icon.data;
+        }-*/;
+
+        public final native String getCondition() /*-{
+            return this.condition.data;
+        }-*/;
 
     }
 

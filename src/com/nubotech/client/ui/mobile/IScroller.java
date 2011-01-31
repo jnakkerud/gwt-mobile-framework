@@ -42,7 +42,6 @@ public class IScroller {
     }
 
     public void refresh() {
-
         refresh(iScrollObj);
     }
 
