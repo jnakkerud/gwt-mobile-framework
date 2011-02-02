@@ -8,6 +8,7 @@ package com.nubotech.client.ui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nubotech.client.RestEncoder;
@@ -75,7 +76,7 @@ public class FeedView extends View {
         sb.append("select title.content, link.href, published, content.content from atom where url in (");
         String[] arS = feedQuery.feedUrls;
         for (int i = 0; i < arS.length; i++) {
-            sb.append("'").append(arS[i]).append("'");
+            sb.append("'").append(URL.decodeQueryString(arS[i])).append("'");
             if (i+1 < arS.length) {
                 sb.append(",");
             }

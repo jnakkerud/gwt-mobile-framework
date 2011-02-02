@@ -151,7 +151,7 @@ public class MainEntryPoint implements EntryPoint {
 
         View parentView = new View.Parent("Home");
         final SectionPanelExample sectionExample = new SectionPanelExample("Section Example", parentView);
-        FeedQuery feedQuery = new FeedQuery("verbier", new String[] {"http://www.google.com/alerts/feeds/05173895962631213926/7161854547244649399"});
+        FeedQuery feedQuery = new FeedQuery("verbier", new String[] {"http%3A%2F%2Fwww.google.com%2Falerts%2Ffeeds%2F05173895962631213926%2F2000760920375303659"});
         final FeedView detailPanel = new FeedView("Feeds", parentView, feedQuery);
         final ExamplePanel examplePanel = new ExamplePanel("Grouped Example", parentView);
         final SettingsPanel settingsPanel = new SettingsPanel(parentView);

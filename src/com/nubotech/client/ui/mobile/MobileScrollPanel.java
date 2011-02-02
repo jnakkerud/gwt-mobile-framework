@@ -25,11 +25,6 @@ public class MobileScrollPanel extends SimplePanel {
         //getElement().getStyle().setOverflow(Overflow.AUTO);
 
         container.setClassName("scroller");
-
-        // Only turn on the touch-scroll implementation if we're on a touch device.
-        if (Utils.isMobile()) {
-            scroller = new IScroller(container);
-        }
     }
 
     public void refresh() {
@@ -37,6 +32,15 @@ public class MobileScrollPanel extends SimplePanel {
             scroller.refresh();
         }
     }
+
+    @Override
+    protected void onLoad() {
+        // Only turn on the touch-scroll implementation if we're on a touch device.
+        if (Utils.isMobile()) {
+            scroller = new IScroller(container);
+        }
+    }
+
 
     @Override
     protected com.google.gwt.user.client.Element getContainerElement() {
